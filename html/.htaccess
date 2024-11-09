@@ -1,0 +1,4 @@
+# AuthType Basic
+# AuthName "Restricted Content"
+# AuthUserFile /home/gtheler/codigos/suncae/auths/htpasswd/.htpasswd
+# Require valid-user

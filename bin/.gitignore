@@ -1,0 +1,5 @@
+feenox
+__pycache__
+gmsh*
+libgmsh*
+pandoc*

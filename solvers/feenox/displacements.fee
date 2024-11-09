@@ -1,0 +1,32 @@
+READ_MESH ${1}-1.vtk DIMENSIONS 3 {
+  READ_FIELD displacements1 AS u
+  READ_FIELD displacements2 AS v
+  READ_FIELD displacements3 AS w
+  READ_FUNCTION sigma
+}
+
+FIND_EXTREMA u(x,y,z)^2+v(x,y,z)^2+w(x,y,z)^2 MAX displ_max2
+displ_max = sqrt(displ_max2)
+warp_max = if(displ_max > 0, 0.1 * ${2} / displ_max, 1)
+
+sigma_max = vecmax(vec_sigma)
+
+OUTPUT_FILE max PATH ${1}-max.json
+# TODO: implement PRINTF with FILE
+PRINT FILE max "\{"
+PRINT FILE max " \"max_displacement\": " displ_max ","
+PRINT FILE max " \"max_warp\":"          warp_max ","
+PRINT FILE max " \"max_sigma\":"         sigma_max
+PRINT FILE max "\}"
+
+VECTOR dxv[nodes]
+VECTOR dyv[nodes]
+VECTOR dzv[nodes]
+
+dxv[i] = vec_u_x[i] + warp_max*vec_u[i]
+dyv[i] = vec_u_y[i] + warp_max*vec_v[i]
+dzv[i] = vec_u_z[i] + warp_max*vec_w[i]
+
+PRINT_VECTOR dxv dyv dzv
+
+

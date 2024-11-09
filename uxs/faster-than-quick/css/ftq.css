@@ -1,0 +1,38 @@
+html {
+  font-size: 1.0rem;
+}
+
+@font-face {
+  font-family: Carlito;
+  src: url(fonts/Carlito-Regular.ttf);
+}
+
+@font-face {
+  font-family: Carlito;
+  src: url(fonts/Carlito-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Carlito;
+  src: url(fonts/Carlito-Italic.ttf);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Carlito;
+  src: url(fonts/Carlito-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+body {
+  font-family: Carlito;
+}
+#cube_canvas {
+ position: fixed;
+ bottom: 0;
+ right: 0;
+ border: 3px solid #73AD21; 
+}

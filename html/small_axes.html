@@ -1,0 +1,111 @@
+    <x3d class="border-0 p-0 m-0"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="3.3"
+     xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.3.xsd"
+     showProgress="false" showStat="false" showLog="false" id="cube_canvas">
+    
+     <scene>
+      <navigationInfo type='"NONE" "ANY"'></navigationInfo>
+      <OrthoViewpoint position="0 0 3" orientation="1 0 0 0" fieldOfView="[-2,-2,2,2]"></OrthoViewpoint>
+      <Transform id="small_axes" render="false">
+
+       <inline id="named_cube" nameSpaceName="named_cube" mapDEFToID="true" url="assets/named_cube.x3d?4"></inline>
+
+       <!-- x -->
+       <shape id="small_axis_line_x">
+        <IndexedLineSet index="0 1 -1">
+         <Coordinate point="0 0 0, 1 0 0" color="1 0 0, 1 0 0"></Coordinate>
+        </IndexedLineSet>
+        <Appearance id="red">
+         <Material diffuseColor="0 0 0" emissiveColor="0.7 0 0"></Material>
+         <DepthMode readOnly="false"></DepthMode>
+<!--          <LineProperties linewidthScaleFactor="2.0"></LineProperties> -->
+        </Appearance>
+       </shape>
+          
+       <Transform translation="1 0 0">
+        <Transform rotation="0 0 1 -1.57079632679">
+         <Shape id="small_axis_arrow_x">
+          <Cone bottomRadius="0.1" height="0.35" subdivision="16"></Cone>
+          <Appearance USE="red"></Appearance>
+         </Shape>
+        </Transform>
+       </Transform>
+          
+       <Transform translation="1.25 0 0">
+        <Billboard axisOfRotation="0 0 0">
+         <Transform translation="0 0 0" scale="0.5 0.5 0.5">
+          <Shape id="small_axis_label_x">
+           <Text string="x" solid="false"><fontstyle family="'Serif'" style="italic"></fontstyle></Text>
+           <Appearance id="yellow"><Material diffuseColor="0 0 0" emissiveColor="0.65 0.65 0"></Material></Appearance>
+          </Shape>
+         </Transform>
+        </Billboard>
+       </Transform>
+        
+       <!-- y -->
+       <shape id="small_axis_line_y">
+        <IndexedLineSet index="0 1 -1">
+         <coordinate point="0 0 0, 0 1 0" color="0 1 0, 0 1 0"></coordinate>
+        </IndexedLineSet>
+        <Appearance id="green">
+         <Material diffuseColor="0 0 0" emissiveColor="0 0.7 0"></Material>
+         <DepthMode readOnly="false"></DepthMode>
+<!--          <LineProperties linewidthScaleFactor="2.0"></LineProperties> -->
+        </Appearance>
+       </shape>
+        
+       <Transform translation="0 1 0">
+        <Transform rotation="0 1 0 -1.57079632679">
+         <Shape id="small_axis_arrow_y">
+          <Cone id="ArrowCone" bottomRadius="0.1" height="0.35" subdivision="16"></Cone>
+          <Appearance USE="green"></Appearance>
+         </Shape>
+        </Transform>
+       </Transform>
+         
+       <Transform translation="0 1.25 0">
+        <Billboard axisOfRotation="0 0 0">
+         <Transform translation="0 0 0" scale="0.5 0.5 0.5">
+          <Shape id="small_axis_label_y">
+           <Text string="y" solid="false"><fontstyle family="'Serif'" style="italic"></fontstyle></Text>
+           <Appearance use="yellow"></Appearance>
+          </Shape>
+         </Transform>
+        </Billboard>
+       </Transform>
+       
+       <!-- z -->
+       <shape id="small_axis_line_z">
+        <IndexedLineSet index="0 1 -1">
+         <coordinate point="0 0 0, 0 0 1" color="0 0 1, 0 0 1"></coordinate>
+        </IndexedLineSet>
+        <Appearance id="blue">
+         <Material diffuseColor="0 0 0" emissiveColor="0 0 0.7"></Material>
+         <DepthMode readOnly="false"></DepthMode>
+<!--          <LineProperties linewidthScaleFactor="2.0"></LineProperties> -->
+        </Appearance>
+       </shape>
+       
+       <Transform translation="0 0 1">
+        <Transform rotation="1 0 0 +1.57079632679">
+         <Shape id="small_axis_arrow_z">
+          <Cone id="ArrowCone" bottomRadius="0.1" height="0.35" subdivision="16"></Cone>
+          <Appearance USE="blue"></Appearance>
+         </Shape>
+        </Transform>
+       </Transform>
+        
+       <Transform translation="0 0 1.25">
+        <Billboard axisOfRotation="0 0 0">
+         <Transform translation="0 0 0" scale="0.5 0.5 0.5">
+          <Shape id="small_axis_label_z">
+           <Text string="z" solid="false"><fontstyle family="'Serif'" style="italic"></fontstyle></Text>
+           <Appearance use="yellow"></Appearance>
+          </Shape>
+         </Transform>
+        </Billboard>
+       </Transform>
+        
+      </Transform>
+     </scene>
+    </x3d>

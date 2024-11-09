@@ -1,0 +1,9 @@
+READ_MESH ${1}.vtk DIMENSIONS 3 {
+  READ_FIELD displacements1 AS u
+  READ_FIELD displacements2 AS v
+  READ_FIELD displacements3 AS w
+  READ_FUNCTION sigma
+}
+
+READ_MESH meshes/${2}.msh
+WRITE_MESH ${1}-1.vtk MESH meshes/${2}.msh VECTOR NAME displacements u v w  sigma
