@@ -165,7 +165,7 @@ include("about.php");
                          col-xl-4
                          col-xxl-3
                          bg-light p-1 overflow-auto">
-    <div class="row m-1 p-1">
+    <div class="row m-1 p-1 d-block d-sm-none">
      <div class="btn-group" role="group" aria-label="Basic example">
       <button class="btn btn-outline-info w-100" onclick="toggle_toolbar('left', 'xs')">
        <i class="bi bi-box-arrow-left me-2"></i>Back to 3D view
