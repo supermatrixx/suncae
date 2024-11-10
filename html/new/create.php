@@ -22,17 +22,20 @@ $cad = $_POST["cad_hash"];
 $id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
 
 // TODO: 2024-09-14
-// if (file_exists("../cads/${cad}/default.geo") === false) {
-//   echo "error: cad ${cad} does not have default.geo";
+// if (file_exists("../cads/{$cad}/default.geo") === false) {
+//   echo "error: cad {$cad} does not have default.geo";
 //   exit();
 // }
+
+
+
 
 
 mkdir($id, $permissions, true);
 chdir($id);
 
 // TODO: per mesher
-copy("../../cads/${cad}/default.geo", "mesh.geo");
+copy("../../cads/{$cad}/default.geo", "mesh.geo");
 
 $case["id"] = $id;
 $case["owner"] = $username;
@@ -57,5 +60,13 @@ fprintf($fee, "\n");
 fprintf($fee, "SOLVE_PROBLEM\n");
 fprintf($fee, "WRITE_RESULTS FORMAT vtk all\n");
 fclose($fee);
+
+$log = fopen("../../../problems.log", "a");
+if ($log === false) {
+  echo "Cannot open log file, please check permissions.";
+  exit(1);
+}
+fprintf($log, "%s\t%s\t%s\n", date("c"), $_SERVER['REMOTE_ADDR'], $id);
+fclose($log);
 
 header("Location: ../?id={$id}");

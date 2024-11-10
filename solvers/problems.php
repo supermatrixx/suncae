@@ -16,6 +16,7 @@ if ($log === false) {
   exit(1);
 }
 fprintf($log, "%s\t%s\t%s\n", date("c"), $_SERVER['REMOTE_ADDR'], $what);
+fclose($log);
 
 if ($what == "physics") {
 

@@ -15,13 +15,13 @@ if (($case = yaml_parse($case_yaml)) == null) {
   exit();
 }
 
-// if (($cad_json = file_get_contents("../data/${user}/cads/${case["cad"]}/cad.json")) == false) {
+// if (($cad_json = file_get_contents("../data/{$user}/cads/{$case["cad"]}/cad.json")) == false) {
 //   echo "cannot find cad {$case["cad"]}";
 //   exit();
 // }
   // TODO: devolver un cubo
 
-$cad_dir = "../data/{$username}/cads/${case["cad"]}/";
+$cad_dir = "../data/{$username}/cads/{$case["cad"]}/";
 if (file_exists($cad_dir."cad.x3d")) {
 
   header("Content-Type: model/x3d+xml");
