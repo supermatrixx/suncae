@@ -70,15 +70,15 @@ With SunCAE---as with sundae ice creams---you get to choose the toppings:
 
 ## Features
 
- * Free and open source. Free both as in "free beer" and in "free speech."
- * Mobile-friendly.
- * Cloud-first.
+ * Free and open source. Free both as in "free beer" and in "free speech"
+ * Mobile-friendly
+ * Cloud-first
 
 ## Support
 
- * Tutorials
- * FAQs
- * Forum
+ * Tutorials (To be done)
+ * FAQs (To be done)
+ * [Forum](https://github.com/seamplex/suncae/discussions/)
  
 ## Licensing
 
