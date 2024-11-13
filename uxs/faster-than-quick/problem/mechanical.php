@@ -40,6 +40,8 @@ if ($fee) {
       $i = 2;
       $n_values = 0;
       $n_groups = 0;
+      $entity = array();
+      $bc_group = array();
       while (isset($line_exploded[$i])) {
         if ($line_exploded[$i] == "GROUPS") {
           while (isset($line_exploded[++$i])) {
@@ -48,7 +50,6 @@ if ($fee) {
             $bc_group[$n_groups++] = $matches[2];
           }
           break;
-          
         } else if ($line_exploded[$i] == "GROUP") {
           $i++;
           preg_match('/(?P<name>\w+)(?P<digit>\d+)/', $line_exploded[$i], $matches);
@@ -59,7 +60,7 @@ if ($fee) {
         }
         $i++;
       }
-      
+
       if ($n_groups == 0) {
         preg_match('/(?P<name>\w+)(?P<digit>\d+)/', $bc_name, $matches);
         $entity[0] = $matches[1];
