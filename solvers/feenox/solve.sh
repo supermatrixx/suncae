@@ -22,7 +22,8 @@ cat << EOF > run/${problem_hash}.json
 }
 EOF
 
-cad=$(yq .cad case.yaml | tr -d \")
+# cad=$(yq .cad case.yaml | tr -d \")
+cad=$(grep  ^cad case.yaml | cut -f2 -d: | tr -d " ")
 max_length=$(jq .max_length ../../cads/${cad}/cad.json)
 
 cp case.fee run/${problem_hash}.fee || exit 2
