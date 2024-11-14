@@ -20,7 +20,7 @@ You can use SunCAE either by...
      3. run a script to fetch the open source CAE-related tools (renderers, solvers, meshers, etc.):
 
      ```terminal
-     sudo apt-get install git unzip patchelf wget php-cli php-yaml
+     sudo apt-get install git unzip patchelf wget php-cli php-yaml gnuplot
      git clone https://github.com/seamplex/suncae
      cd suncae
      ./deps.sh
