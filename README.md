@@ -11,7 +11,9 @@ You can use SunCAE either by...
  1. using someone else’s servers and configurations
 
      * open [this link to use SunCAE in our live demo](https://www.caeplex.com/suncae)
-     * check out [this 4-min Youtube video for an overview](https://youtu.be/MYl7-tcCAfE)
+     * check out these Youtube videos to learn how to use it
+       - [Tutorial #1: Overview](https://youtu.be/MYl7-tcCAfE) (4 min)
+       - [Tutorial #2: NAFEMS LE10](https://youtu.be/ANQX0EZI_q8) (4 min)
 
  2. hosting your own server (it can be your laptop!) so you (or other people) can use it:
 

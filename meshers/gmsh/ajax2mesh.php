@@ -38,7 +38,7 @@ if ($current && $new) {
       } else {
         fwrite($new, $line);
       }
-    } else {
+    } else if (str_contains($line, "SystemCall") === false) {
       fwrite($new, $line);
     }
   }
