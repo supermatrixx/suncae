@@ -1,3 +1,11 @@
+# Roadmap
+
+ * more problems
+ * more meshers
+ * more solvers
+ * more runners (ssh, aws, kubernetes, etc.)
+ * 
+
 # TODOs
 
 ## General

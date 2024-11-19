@@ -55,7 +55,7 @@ ln -s html /var/www/html/suncae
 and then SunCAE would be available at <http://localhost/suncae>.
 
 
-For more detailed instructions including setting up production web servers and using virtualization tools (e.g. docker and/or virtual machines) read the [documentation](doc).
+For more detailed instructions including setting up production web servers and using virtualization tools (e.g. docker and/or virtual machines) read the [installation guide](doc/INSTALL.md).
 
 ## Configuration
 
