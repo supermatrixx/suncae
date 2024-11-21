@@ -21,12 +21,15 @@ You can use SunCAE either by...
      2. clone the SunCAE repository
      3. run a script to fetch the open source CAE-related tools (renderers, solvers, meshers, etc.):
 
-     ```terminal
-     sudo apt-get install git unzip patchelf wget php-cli php-yaml gnuplot
-     git clone https://github.com/seamplex/suncae
-     cd suncae
-     ./deps.sh
-     ```
+        ```terminal
+        sudo apt-get install git
+        git clone https://github.com/seamplex/suncae
+        cd suncae
+        sudo apt-get install unzip patchelf wget php-cli php-yaml gnuplot
+        ./deps.sh
+        php -S localhost:8000 -t html
+        ```
+     4. open <http://localhost:8000> with a web browser
 
 > [!NOTE]
 > SunCAE is aimed at the cloud. The cloud likes Unix (and Unix likes the cloud).
@@ -36,23 +39,6 @@ You can use SunCAE either by...
 > Moreover, most CAE solvers do not perform in Windows.
 > There is a simple explanation: (good) solvers are written by hackers.
 > And hackers---as [Paul Graham already explained more than twenty years ago](https://paulgraham.com/gh.html)---do not like Windows (and Windows do not like hackers either).
-
-
-To make a quick check, run PHP’s built-in web server:
-
-```terminal
-php -S localhost:8000 -t html
-```
-
-SunCAE should now be available at <http://localhost:8000>.
-
-If you already have a PHP-enabled web server (e.g. Apache) then make sure that SunCAE’s  [`html`](html) directory is available to be served. For instance, in the default installation you could do
-
-```terminal
-ln -s html /var/www/html/suncae
-```
-
-and then SunCAE would be available at <http://localhost/suncae>.
 
 
 For more detailed instructions including setting up production web servers and using virtualization tools (e.g. docker and/or virtual machines) read the [installation guide](doc/INSTALL.md).

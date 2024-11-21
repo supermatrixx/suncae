@@ -98,12 +98,22 @@ php -S localhost:8000 -t html
 
 Configure Apache to serve the `html` directory in SunCAE's repository.
 By default, Apache's root directory is `/var/www/html`.
-If you do not have experience with Apache, you might want to delete the default `/var/www` tree and clone SunCAE there.
 
-If you have experience with Apache, there is little more to add.
+A quick hack is to make sure that SunCAE’s  [`html`](html) directory is available to be served. For instance, in the default installation you could do
+
+```terminal
+ln -s html /var/www/html/suncae
+```
+
+and then SunCAE would be available at <http://localhost/suncae>.
 
 > [!WARNING]
 > Mind Apache's policies about symbolic links. They are not straightforward, so symlinking SunCAE's `html` directory into Apache's `html` directory might now work out of the box.
+
+
+ * If you do not have experience with Apache, you might want to delete the default `/var/www` tree and clone SunCAE there.
+ * If you have experience with Apache, there is little more to add.
+
 
 > [!IMPORTANT]
 > The first time that SunCAE needs to use the `data` directory, it will be created and owned by the user running the server, which in this case by default is `www-data`.
