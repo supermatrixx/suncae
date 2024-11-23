@@ -74,5 +74,13 @@ if ($current && $new) {
 }
 $mesh_hash = mesh_hash();
 
+exec("git commit -a -m 'mesh {$field} = {$value}'", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot git commit {$case["problem"]} {$id}");
+  echo "cannot git commit {$case["problem"]} {$id}";
+  exit(1);
+}
+suncae_log("mesh {$id} ajax2yaml {$field} = {$value}");
+
 
 return_back_json($response);

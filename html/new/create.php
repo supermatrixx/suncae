@@ -52,7 +52,7 @@ yaml_emit_file("case.yaml", $case);
 // TODO: per problem!
 $fee = fopen("case.fee", "w");
 fprintf($fee, "PROBLEM %s\n", $case["problem"]);
-fprintf($fee, "READ_MESH \"meshes/%s-2.msh\"\n", md5_file("mesh.geo"));
+fprintf($fee, "READ_MESH meshes/%s-2.msh\n", md5_file("mesh.geo"));
 fprintf($fee, "\n");
 fprintf($fee, "E(x,y,z) = (200)*1e3\n");
 fprintf($fee, "nu = 0.3\n");
@@ -60,6 +60,30 @@ fprintf($fee, "\n");
 fprintf($fee, "SOLVE_PROBLEM\n");
 fprintf($fee, "WRITE_RESULTS FORMAT vtk all\n");
 fclose($fee);
+
+$gitignore = fopen(".gitignore", "w");
+fprintf($gitignore, "run");
+fclose($gitignore);
+
+# TODO: create a local user
+exec("git init --initial-branch=main", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot git init {$case["problem"]} {$id}");
+  echo "cannot git init {$case["problem"]} {$id}";
+  exit(1);
+}
+exec("git add .", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot git add {$case["problem"]} {$id}");
+  echo "cannot git add {$case["problem"]} {$id}";
+  exit(1);
+}
+exec("git commit -m 'initial commit'", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot git commit {$case["problem"]} {$id}");
+  echo "cannot git commit {$case["problem"]} {$id}";
+  exit(1);
+}
 
 suncae_log("created problem {$case["problem"]} {$id}");
 

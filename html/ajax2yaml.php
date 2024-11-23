@@ -51,5 +51,14 @@ if ($update_yaml) {
   file_put_contents("case.yaml", yaml_emit($case));
 }
 
+exec("git commit -a -m 'case {$field} = {$value}'", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot git commit {$case["problem"]} {$id}");
+  echo "cannot git commit {$case["problem"]} {$id}";
+  exit(1);
+}
+suncae_log("case {$id} ajax2yaml {$field} = {$value}");
+
+
 // TODO: git commit
 return_back_json($response);
