@@ -66,7 +66,8 @@ fprintf($gitignore, "run");
 fclose($gitignore);
 
 # TODO: create a local user
-exec("git init --initial-branch=main", $output, $result);
+// exec("git init --initial-branch=main", $output, $result);
+exec("git init", $output, $result);
 if ($result != 0) {
   suncae_log("cannot git init {$case["problem"]} {$id}");
   echo "cannot git init {$case["problem"]} {$id}";
