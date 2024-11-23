@@ -26,6 +26,7 @@ if (file_exists("cad.json") === false) {
     for ($i = 0; $i < count($output); $i++) {
       $response["error"] .= $output[$i];
     }
+    suncae_log("CAD {$cad_hash} process {$response["status"]} {$response["error"]}");
     return_back_json($response);
   }
 }
@@ -41,6 +42,7 @@ if (file_exists("cad.json")) {
 } else {
   $response["status"] = "error";
   $response["error"] = "Cannot create CAD json.";
+  suncae_log("CAd {$cad_hash} process {$response["status"]} {$response["error"]}");
   return_back_json($response);
 }
 
@@ -48,6 +50,9 @@ if (file_exists("cad.json")) {
 // ------------------------------------------------------------
 // leave running the mesher in the background
 exec("../../../../meshers/{$mesher}/initial.sh > cadmesh.log 2>&1 &");
+
+suncae_log("CAD {$cad_hash} process {$response["status"]} {$response["error"]}");
+
 
 return_back_json($response);
 

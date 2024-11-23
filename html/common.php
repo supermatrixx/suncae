@@ -36,3 +36,21 @@ if (!function_exists('str_contains')) {
     return $needle !== '' && mb_strpos($haystack, $needle) !== false;
   }
 }
+
+function suncae_log($message) {
+  global $permissions;
+  global $username;
+  if (file_exists("../../../logs") ==  false) {
+    if (mkdir("../../../logs", $permissions, true) == false) {
+      echo "error: cannot create log directory";
+      exit();
+    }
+  }
+  $log = fopen("../../../logs/".date("Y-m-d").".log", "a");
+  if ($log === false) {
+    echo "Cannot open log file, please check permissions.";
+    exit(1);
+  }
+  fprintf($log, "%s %s\t%s: %s\n", date("c"), $_SERVER['REMOTE_ADDR'], $username, $message);
+  fclose($log);
+}

@@ -47,14 +47,18 @@ switch ($next_step) {
         // https://stackoverflow.com/questions/45953/php-execute-a-background-process
         exec("../../../../meshers/gmsh/mesh.sh > run/meshing.log 2>&1 & echo $! > run/meshing.pid");
         $mesh_meta["status"] = "running";
+        suncae_log("{$id} mesh running");
       } else {
         $mesh_meta["status"] = "syntax_error";
+        suncae_log("{$id} mesh syntax error");
       }
       file_put_contents("run/meshes/{$mesh_hash}.json", json_encode($mesh_meta));
     }
     // if running, go to meshing.php otherwise go to mesh.php, it will know what to show}
     // TODO: AND or OR?
     $next_step *= (isset($mesh_meta["status"]) && $mesh_meta["status"] != "running") ? (+1) : (-1);
+    
+    suncae_log("{$id} change_step {$current_step} -> {$next_step}");
     
   break;
   
@@ -70,10 +74,13 @@ switch ($next_step) {
       if ($result == 0) {
         exec("../../../../solvers/feenox/solve.sh > run/solving.log 2>&1 & echo $! > run/solving.pid");
         $results_meta["status"] = "running";
+        suncae_log("{$id} problem running");
       } else {
         $results_meta["status"] = "syntax_error";
+        suncae_log("{$id} problem syntax error");
       }
       file_put_contents("run/{$problem_hash}.json", json_encode($results_meta));
+      suncae_log("{$id} change_step {$current_step} -> {$next_step}");
     }
     if (isset($results_meta)) {
       $next_step *= ($results_meta["status"] != "running") ? (+1) : (-1);

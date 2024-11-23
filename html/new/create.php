@@ -61,12 +61,6 @@ fprintf($fee, "SOLVE_PROBLEM\n");
 fprintf($fee, "WRITE_RESULTS FORMAT vtk all\n");
 fclose($fee);
 
-$log = fopen("../../../problems.log", "a");
-if ($log === false) {
-  echo "Cannot open log file, please check permissions.";
-  exit(1);
-}
-fprintf($log, "%s\t%s\t%s\n", date("c"), $_SERVER['REMOTE_ADDR'], $id);
-fclose($log);
+suncae_log("created problem {$case["problem"]} {$id}");
 
 header("Location: ../?id={$id}");

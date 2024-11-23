@@ -16,6 +16,7 @@ $file_content = file_get_contents('php://input');
 $response["cad_hash"] = md5($file_content);
 // assume there is no error and that we can show the preview
 $response["status"] = "ok";
+$response["error"] = "";
 $response["show_preview"] = true;
 
 $cad_dir = "../../data/{$username}/cads/{$response["cad_hash"]}";
@@ -51,6 +52,7 @@ if (file_exists("original.json") === false) {
     for ($i = 0; $i < count($output); $i++) {
       $response["error"] .= $output[$i];
     }
+    suncae_log("CAD {$response["cad_hash"]} upload {$response["status"]} {$response["error"]}");
     return_back_json($response);
   }
 }
@@ -76,6 +78,9 @@ if (file_exists("original.json")) {
   $response["show_preview"] = false;
   $response["error"] = "Cannot create original json.";
 }
+
+suncae_log("CAD {$response["cad_hash"]} upload {$response["status"]} {$response["error"]}");
+
 
 return_back_json($response);
 
