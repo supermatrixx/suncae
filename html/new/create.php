@@ -73,6 +73,21 @@ if ($result != 0) {
   echo "cannot git init {$case["problem"]} {$id}";
   exit(1);
 }
+
+exec("git config user.name '{$username}'", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot set user.name {$case["problem"]} {$id}");
+  echo "cannot set user.name {$case["problem"]} {$id}";
+  exit(1);
+}
+
+exec("git config user.email '{$username}@suncae'", $output, $result);
+if ($result != 0) {
+  suncae_log("cannot set user.email {$case["problem"]} {$id}");
+  echo "cannot set user.email {$case["problem"]} {$id}";
+  exit(1);
+}
+
 exec("git add .", $output, $result);
 if ($result != 0) {
   suncae_log("cannot git add {$case["problem"]} {$id}");
