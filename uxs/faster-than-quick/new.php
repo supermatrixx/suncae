@@ -78,7 +78,7 @@ include("about.php");
         <label for="problem" class="form-label">
          <span class="badge text-bg-primary" id="badge_problem">3</span>&nbsp;Problem
         </label>
-        <select class="form-select col-6" id="problem" onchange="update_problem(this.value, 'problem', 'solver')">
+        <select class="form-select col-6" id="problem" name="problem" onchange="update_problem(this.value, 'problem', 'solver')">
         </select>
         <div id="problem_help" class="form-text mb-3">
          Once you have the problem, choose the solver.
@@ -92,7 +92,7 @@ include("about.php");
         <label for="solver" class="form-label">
          <span class="badge text-bg-primary" id="badge_solver">4</span>&nbsp;Solver
         </label>
-        <select class="form-select col-6" id="solver" onchange="update_problem(this.value, 'solver', 'mesher')">
+        <select class="form-select col-6" id="solver" name="solver" onchange="update_problem(this.value, 'solver', 'mesher')">
         </select>
 <!--
         <div id="solver_help" class="form-text">
@@ -105,7 +105,7 @@ include("about.php");
         <label for="mesher" class="form-label">
          <span class="badge text-bg-primary" id="badge_mesher">5</span>&nbsp;Mesher
         </label>
-        <select class="form-select col-6" id="mesher" onchange="enable_btn_start()">
+        <select class="form-select col-6" id="mesher" name="mesher" onchange="enable_btn_start()">
         </select>
 <!--
         <div id="mesher_help" class="form-text">

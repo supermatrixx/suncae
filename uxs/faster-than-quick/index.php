@@ -732,10 +732,11 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 <script type="text/javascript" src="js/faster-than-quick/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/x3dom.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/ftq.js"></script>
+<script type="text/javascript" src="js/faster-than-quick/<?=$case["problem"]?>.js"></script>
 <script>
 var id = "<?=$id?>"
 function geo_ready() {
-  console.log("GEO READY!");
+  // console.log("GEO READY!");
 
 <?php
 // TODO: php or javascript?

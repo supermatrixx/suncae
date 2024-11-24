@@ -7,6 +7,10 @@ include("../../conf.php");
 include("../../auths/{$auth}/auth.php");
 include("../common.php");
 
+$solver = $_POST["solver"];
+include("../../solvers/{$solver}/input_initial.php");
+
+
 if (file_exists("../../data/{$username}/cases") ==  false) {
   if (mkdir("../../data/{$username}/cases", $permissions, true) == false) {
     echo "error: cannot create cases directory";
@@ -28,9 +32,6 @@ $id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
 // }
 
 
-
-
-
 mkdir($id, $permissions, true);
 chdir($id);
 
@@ -42,24 +43,14 @@ $case["owner"] = $username;
 $case["date"] = time();
 $case["cad"] = $cad;
 // TODO: choose
-$case["problem"] = "mechanical";
-$case["mesher"] = "gmsh";
-$case["solver"] = "feenox";
+$case["problem"] = $_POST["problem"];
+$case["mesher"] = $_POST["mesher"];
+$case["solver"] = $solver;
 $case["name"] = isset($_POST["name"]) ? $_POST["name"] : "Unnamed";
 $case["visibility"] = "public";
 yaml_emit_file("case.yaml", $case);
 
-// TODO: per problem!
-$fee = fopen("case.fee", "w");
-fprintf($fee, "PROBLEM %s\n", $case["problem"]);
-fprintf($fee, "READ_MESH meshes/%s-2.msh\n", md5_file("mesh.geo"));
-fprintf($fee, "\n");
-fprintf($fee, "E(x,y,z) = (200)*1e3\n");
-fprintf($fee, "nu = 0.3\n");
-fprintf($fee, "\n");
-fprintf($fee, "SOLVE_PROBLEM\n");
-fprintf($fee, "WRITE_RESULTS FORMAT vtk all\n");
-fclose($fee);
+solver_input_write_initial("case.fee", $case["problem"]);
 
 $gitignore = fopen(".gitignore", "w");
 fprintf($gitignore, "run");

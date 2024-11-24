@@ -2,7 +2,7 @@
  <div class="modal-dialog modal-dialog-centered">
   <div class="modal-content">
    <div class="modal-header">
-    <h1 class="modal-title fs-5" id="modal_about_label">About <span class="text-secondary">Sun</span><span class="text-primary">CAE</span></span></h1>
+    <h1 class="modal-title fs-5" id="modal_about_label">About <span class="text-secondary">Sun</span><span class="text-primary">CAE</span></h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
    </div>
    <div class="modal-body">
