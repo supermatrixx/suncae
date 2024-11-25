@@ -1,6 +1,7 @@
 #!/bin/false
 
-x3dom_version=1.8.3
+# x3dom_version=1.8.3
+x3dom_version=1.8.4-dev
 
 echo -n "renderers/x3dom: x3dom.js & x3dom.css... "
 if [ ! -e renderers/x3dom/x3dom.js ]; then
@@ -8,7 +9,8 @@ if [ ! -e renderers/x3dom/x3dom.js ]; then
   x3dom_tarball=x3dom-${x3dom_version}
  
   if [ ! -e ${x3dom_tarball}.zip ]; then
-    wget -c https://www.x3dom.org/download/${x3dom_version}/${x3dom_tarball}.zip
+#     wget -c https://www.x3dom.org/download/${x3dom_version}/${x3dom_tarball}.zip
+    wget -c https://www.x3dom.org/download/dev/${x3dom_tarball}.zip
   fi
   if [ ! -d x3dom ]; then
     mkdir -p x3dom

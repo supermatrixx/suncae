@@ -24,10 +24,10 @@ if ($fee) {
     } else if (strncmp("q(x,y,z) = ", $line, 11) == 0) {
       preg_match('/q\(x,y,z\).*= (.*)/', $line, $matches);
       if (count($matches) == 2) {
-        $q = $matches[1];
+        $q3 = $matches[1];
       }
     } else if (strncmp("q = ", $line, 4) == 0) {
-      $q = substr($line, 4);
+      $q3 = substr($line, 4);
 
       
     } else if (strncmp("BC ", $line, 3) == 0) {
@@ -138,10 +138,10 @@ for ($i = 0; $i < 10; $i++) {
     $bc_type = "temperature";
   }
 
-  $q = "0";
+  $q2 = "0";
   if ($i < count($bc) && str_contains($bc[$i]["value"], "q=")) {
     preg_match('/q=([^\s]*)/', $bc[$i]["value"], $matches);
-    $q = $matches[1];
+    $q2 = $matches[1];
     $bc_type = "heatflux";
   }
   
@@ -235,7 +235,7 @@ for ($i = 0; $i < 10; $i++) {
      <div class="col-8 <?=($bc_type == "temperature")?"":"d-none"?>" id="bc_value_<?=$i+1?>_temperature">
       <div class="input-group">
        <span class="input-group-text"><?=$label["T="]?></span>
-       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_T" value="<?=$p?>" onblur="ajax2problem(this.name, 'p='+this.value)">
+       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_T" value="<?=$T?>" onblur="ajax2problem(this.name, 'T='+this.value)">
        <span class="input-group-text"><?=$label["K"]?></span>
       </div>
      </div>
@@ -244,7 +244,7 @@ for ($i = 0; $i < 10; $i++) {
      <div class="col-8 <?=($bc_type == "heatflux")?"":"d-none"?>" id="bc_value_<?=$i+1?>_heatflux">
       <div class="input-group">
        <span class="input-group-text"><?=$label["q2="]?></span>
-       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_q" value="<?=$p?>" onblur="ajax2problem(this.name, 'p='+this.value)">
+       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_q" value="<?=$q2?>" onblur="ajax2problem(this.name, 'q='+this.value)">
        <span class="input-group-text"><?=$label["Wmm-2K"]?></span>
       </div>
      </div>
@@ -253,9 +253,16 @@ for ($i = 0; $i < 10; $i++) {
      <div class="col-8 <?=($bc_type == "convection")?"":"d-none"?>" id="bc_value_<?=$i+1?>_convection">
       <div class="input-group">
        <span class="input-group-text"><?=$label["h="]?></span>
-       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_h" value="<?=$p?>" onblur="ajax2problem(this.name, 'p='+this.value)">
+       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_h" value="<?=$h?>" onblur="ajax2problem(this.name, 'h='+this.value+' Tref='+text_bc_<?=$i+1?>_Tref.value)">
        <span class="input-group-text"><?=$label["Wmm-2K-1"]?></span>
       </div>
+      
+      <div class="input-group">
+       <span class="input-group-text"><?=$label["Tref="]?></span>
+       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_Tref" value="<?=$h?>" onblur="ajax2problem(this.name, 'h='+text_bc_<?=$i+1?>_h.value+' Tref='+this.value)">
+       <span class="input-group-text"><?=$label["K"]?></span>
+      </div>
+      
      </div>
     </div>
     
@@ -273,8 +280,8 @@ pop_accordion_item();
 push_accordion_item("materialproperties", "problem", "Material properties", false);
 ?>
     <div class="row mt-2 mb-1">
-     <label for="material_model" class="col-4 col-form-label text-end">Thermal conduction model</label>
-     <div class="col-8">
+     <label for="material_model" class="col-6 col-form-label text-end">Thermal conduction model</label>
+     <div class="col-6">
       <select class="form-select" id="material_model" onchange="">
        <option value="linear_elastic_isotropic">Isotropic</a>
       </select>
@@ -282,29 +289,21 @@ push_accordion_item("materialproperties", "problem", "Material properties", fals
     </div> 
 
     <div class="row mt-2 mb-1">
-     <label for="text_name" class="col-2 col-form-label text-end"><?=$label["k="]?></label>
+     <label for="text_name" class="col-4 col-form-label text-end"><?=$label["k="]?></label>
      <div class="col-8">
       <div class="input-group">
        <input type="text" class="form-control" name="k" id="text_k" value="<?=$k?>" onblur="ajax2problem(this.name, this.value)">
-       <!-- TODO: choose -->
-       <span class="input-group-text"><?=$label["Wm-1K-1"]?></span>
+       <!-- TODO: choose units -->
+       <span class="input-group-text"><?=$label["Wmm-1K-1"]?></span>
       </div>
      </div>
     </div> 
     <div class="row mt-2 mb-1">
-     <label for="text_name" class="col-2 col-form-label text-end"><?=$label["q3="]?></label>
-     <div class="col-4">
+     <label for="text_q" class="col-4 col-form-label text-end"><?=$label["q3="]?></label>
+     <div class="col-8">
       <div class="input-group">
-       <input type="text" class="form-control" name="k" id="text_k" value="<?=$k?>" onblur="ajax2problem(this.name, this.value)">
-       <!-- TODO: choose -->
-       <span class="input-group-text"><?=$label["Wm-1K-1"]?></span>
-      </div>
-     </div>
-     
-     <label for="text_name" class="col-2 col-form-label text-end"><?=$label["q3="]?></label>
-     <div class="col-4">
-      <div class="input-group">
-       <input type="text" class="form-control" name="q" id="text_q" value="<?=$q?>" onblur="ajax2problem(this.name, this.value)">
+       <input type="text" class="form-control" name="q" id="text_q" value="<?=$q3?>" onblur="ajax2problem(this.name, this.value)">
+       <span class="input-group-text"><?=$label["Wmm-3"]?></span>
        <button class="btn btn-light dropdown-toggle" type="button" id="button_dropdown_bc_<?=$i+1?>" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-three-dots"></i>
        </button>
