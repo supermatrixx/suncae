@@ -8,10 +8,16 @@ if [ ! -d ./run ]; then
   echo "error: run dir does not exist"
   exit 1
 fi
+if [ -z "${1}" ]; then
+  echo "error: specify the problem type"
+  exit 1
+fi
+
 
 # https://stackoverflow.com/questions/3679296/only-get-hash-value-using-md5sum-without-filename
 # A simple array assignment works... Note that the first element of a Bash array can be addressed by just the name without the [0] index, i.e., $md5 contains only the 32 characters of md5sum.
 
+problem_type=${1}
 problem_hash=($(md5sum case.fee))
 mesh_hash=($(md5sum mesh.geo))
 
@@ -36,10 +42,6 @@ if [ $? -eq 0 ]; then
   # see if we have the second-order mesh
   if [ ! -e meshes/${mesh_hash}-2.msh ]; then
     ../../../../../bin/gmsh -3 meshes/${mesh_hash}.msh  -order 2 -o meshes/${mesh_hash}-2.msh > meshes/${mesh_hash}-2.1
-#     if [ $? -ne 0 ]; then
-#       rm -f meshes/${mesh_hash}-2.msh 
-#       ln meshes/${mesh_hash}.msh meshes/${mesh_hash}-2.msh 
-#     fi
   fi
   
   # run
@@ -48,9 +50,13 @@ if [ $? -eq 0 ]; then
   feenox_error=$?
  
   if [ $feenox_error -eq 0 ]; then
-    ../../../../../bin/feenox ../../../../../solvers/feenox/second2first.fee  ${problem_hash} ${mesh_hash}
-    ../../../../../bin/feenox ../../../../../solvers/feenox/displacements.fee ${problem_hash} ${max_length} | tr -s ' \t\n' ' ' > ${problem_hash}-displacements.dat
-    ../../../../../bin/feenox ../../../../../solvers/feenox/field.fee         ${problem_hash} sigma         | tr -s ' \t\n' ' ' > ${problem_hash}-sigma.dat
+    if [ "x${problem_type}" = "xmechanical" ]; then
+      ../../../../../bin/feenox ../../../../../solvers/feenox/second2first.fee  ${problem_hash} ${mesh_hash}
+      ../../../../../bin/feenox ../../../../../solvers/feenox/displacements.fee ${problem_hash} ${max_length} | tr -s ' \t\n' ' ' > ${problem_hash}-displacements.dat
+      ../../../../../bin/feenox ../../../../../solvers/feenox/field1.fee        ${problem_hash} sigma         | tr -s ' \t\n' ' ' > ${problem_hash}-sigma.dat
+    elif [ "x${problem_type}" = "xheat_conduction" ]; then
+      ../../../../../bin/feenox ../../../../../solvers/feenox/field.fee         ${problem_hash} T             | tr -s ' \t\n' ' ' > ${problem_hash}-T.dat
+    fi
     status="success"
   else
     status="error" 

@@ -10,25 +10,9 @@ title_left("Results");
 push_accordion("results");
 push_accordion_item("currentresults", "results", "Summary", true);
 
-$warp_max = 0;
 if ($has_results) {
 
-  if (file_exists("{$case_dir}/run/{$problem_hash}-max.json")) {
-    $max_json = json_decode(file_get_contents("{$case_dir}/run/{$problem_hash}-max.json"), true);
-    $displ_max = $max_json["max_displacement"];
-    $sigma_max = $max_json["max_sigma"];
-    $warp_max = $max_json["max_warp"];
-  }
-  
-  if ($warp_max == 0) {
-    $warp_max = 1;
-  } else {
-    $warp_max = pow(10, ceil(log10($warp_max)));
-  }
-
-  row_set_width(7);
-  row_ro_units("Max. displacement ".$label["maxu"], number_format($displ_max, 5), $label["mm"]);
-  row_ro_units("Max. von Mises stress ".$label["maxsigma"], number_format($sigma_max, 1), $label["MPa"]);
+  include("results/{$case["problem"]}.php");
   
 } else if ($has_results_attempt) {
   if ($results_meta["status"] == "canceled") {
@@ -76,7 +60,7 @@ if ($has_results) {
 if (file_exists("{$case_dir}/run/{$problem_hash}.vtk")) {
 ?>
     <div class="row m-1 p-1">
-     <div class="btn-group" role="group" aria-label="Basic example">
+     <div class="btn-group" role="group">
       <a class="btn btn-success w-100" href="results_vtk.php?id=<?=$id?>&hash=<?=$problem_hash?>">
        <i class="bi bi-download me-2"></i>Download VTK
       </a>
@@ -92,7 +76,7 @@ if (file_exists("{$case_dir}/run/{$problem_hash}.vtk")) {
 pop_accordion_item();
 push_accordion_item("probe", "results", "Probe point", false);
 ?>
-TODO
+<h2>Not yet implemented</h2>
 <?php
 pop_accordion_item();
 
@@ -117,7 +101,7 @@ if ($console != "") {
 
 push_accordion_item("advanced", "results", "Advanced post-processing", false);
 ?>
-TODO
+<h2>Not yet implemented</h2>
 <?php
 pop_accordion_item();
 pop_accordion();
@@ -152,7 +136,7 @@ pop_accordion();
 </div> 
 
 <?php
-if ($displ_max > 0) {
+if (isset($displ_max) && $displ_max > 0) {
 ?>
 <img src onerror="animate_warp_auto(<?=$warp_max?>, 1000);"> 
 <?php

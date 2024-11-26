@@ -124,8 +124,12 @@ if ($has_mesh_attempt && ($mesh_meta = json_decode(file_get_contents($mesh_meta_
 $results_meta_path = "{$case_dir}/run/{$problem_hash}.json";
 
 // TODO: non-mechanical
-$displacements_data_path = "{$case_dir}/run/{$problem_hash}-displacements.dat";
-$has_results = file_exists($displacements_data_path);
+if ($case["problem"] == "mechanical") {
+  $results_data_path = "{$case_dir}/run/{$problem_hash}-displacements.dat";
+} else if ($case["problem"] == "heat_conduction") {
+  $results_data_path = "{$case_dir}/run/{$problem_hash}-T.dat";
+}
+$has_results = file_exists($results_data_path);
 $has_results_attempt = file_exists($results_meta_path);
 if ($has_results_attempt && ($results_meta = json_decode(file_get_contents($results_meta_path), true)) != null) {
   if ($results_meta["status"] == "success") {
