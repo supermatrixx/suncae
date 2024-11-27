@@ -7,7 +7,9 @@ chdir("../data/{$username}/cases/{$id}");
 $fee = fopen("case.fee", "w");
 fwrite($fee, "PROBLEM mechanical\n");
 $mesh_hash = mesh_hash();
-fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-2.msh\";\n");
+// TODO: xxx
+//fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-2.msh\";\n");
+fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}.msh\";\n");
 fwrite($fee, $_POST["fee"]);
 fclose($fee);
 

@@ -367,11 +367,11 @@ function update_mesh(mesh_hash = "") {
       // convert from IndexedTriangleSet to IndexedFaceSet
       let array = value.split(" ");
       for (let i = 0; i < array.length; i += 3) {
-        results_indexedfaceset_set += array[i+0] + " " + array[i+1] + " " + array[i+2] + " " + array[i+0] + "-1 ";
+        results_indexedfaceset_set += array[i+0] + " " + array[i+1] + " " + array[i+2] + " " + array[i+0] + " -1 ";
       }
 
       // TODO: real bc colors
-      faces_html += '<Shape><Appearance><Material diffuseColor="' + color["base"][0] + ' ' + color["base"][1] + ' ' + color["base"][2] +  '"></Material></Appearance><IndexedTriangleSet normalPerVertex="false" solid="false" index="' + value + '"><Coordinate USE="nodes"></Coordinate></IndexedTriangleSet></Shape>';
+      faces_html += '<Shape><Appearance><Material diffuseColor="' + color["base"][0] + ' ' + color["base"][1] + ' ' + color["base"][2] +  '"></Material></Appearance><IndexedTriangleSet normalPerVertex="false" solid="false" index="' + value + '"><Coordinate use="nodes"></Coordinate></IndexedTriangleSet></Shape>';
     }
     surfaces_faces.innerHTML = faces_html;
     if (mesh_hash != "") {
@@ -401,35 +401,36 @@ function update_results(problem_hash = "") {
     }
 
     if (data["error"] === undefined || data["error"] == "") {
-    
-      // range_warp.setAttribute("max", warp_max);
-      // range_warp.setAttribute("step", warp_max/100);
 
       let coord_indexes = surfaces_edges_set.getAttribute("coordIndex");
       let nodes = document.getElementById("nodes").getAttribute("point");
-      let nodes_warped = data["nodes_warped"];
-
-      results_surfaces_edges.innerHTML = '\
+      
+      if (data["nodes_warped"] !== undefined) {
+        results_surfaces_edges.innerHTML = '\
 <Appearance><Material emissiveColor="0 0 0" diffuseColor="0 0 0"></Material></Appearance>\
 <IndexedLineSet coordIndex="' + coord_indexes + '"><Coordinate id="nodes_warped"></Coordinate></IndexedLineSet>\
 <ScalarInterpolator id="si" key="0 1" keyValue="0 1"><ScalarInterpolator>\
-<CoordinateInterpolator id="ci" key="0 1" keyValue="' + nodes + ' ' + nodes_warped + '"></CoordinateInterpolator>\
+<CoordinateInterpolator id="ci" key="0 1" keyValue="' + nodes + ' ' + data["nodes_warped"] + '"></CoordinateInterpolator>\
 <Route fromNode="ci" fromField="value_changed" toNode="nodes_warped" toField="point"></Route>\
 <Route fromNode="si" fromField="value_changed" toNode="ci" toField="set_fraction"></Route>';
-
-      si.setAttribute("set_fraction", "0");
+        si.setAttribute("set_fraction", "0");
+      } else {
+        results_surfaces_edges.innerHTML = '\
+<Appearance><Material emissiveColor="0 0 0" diffuseColor="0 0 0"></Material></Appearance>\
+<IndexedLineSet coordIndex="' + coord_indexes + '"><Coordinate use="nodes"></Coordinate></IndexedLineSet>';
+      }
 
       let color_string = "";
       let array = data["field"].trim().split(" ");
-      // theseus_log(array.length);
       for (let i = 0; i < array.length; i++) {
-        color_string += palette(array[i], "sigma") + ", ";
+        // TODO: read the field name from the ajax
+        color_string += palette(array[i], "temperature") + ", ";
       }
 
       results_surfaces_faces.innerHTML = '\
 <appearance><Material shininess="0.1"></Material></appearance>\
 <IndexedFaceSet colorPerVertex="true" normalPerVertex="false" solid="false" coordIndex="' + results_indexedfaceset_set + '">\
-<Coordinate use="nodes_warped"></Coordinate>\
+<Coordinate use="nodes"></Coordinate>\
 <Color id="color_scalar" color="'+ color_string +'"></Color>\
 </IndexedFaceSet>';
     

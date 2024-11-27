@@ -45,7 +45,9 @@ function update_mesh_in_fee() {
     if ($current && $new) {
       while (($line = fgets($current)) !== false) {
         if (strncmp("READ_MESH", $line, 9) == 0) {
-          fprintf($new, "READ_MESH meshes/%s-2.msh\n", $real_mesh_hash);
+          // TODO: xxx
+          fprintf($new, "READ_MESH meshes/%s.msh\n", $real_mesh_hash);
+//          fprintf($new, "READ_MESH meshes/%s-2.msh\n", $real_mesh_hash);
         } else {
           fwrite($new, $line);
         }

@@ -18,6 +18,8 @@ if (chdir("../data/{$username}/cases/{$id}") === false) {
 // TODO: per-physics
 if ($field == "E" ||
     $field == "nu" ||
+    $field == "k" ||
+    $field == "q" ||
     strncmp($field, "bc_", 3) == 0) {
 
   $bc_n = 0;
@@ -49,6 +51,18 @@ if ($field == "E" ||
         }
         fprintf($new, "nu = %s\n", $value);
 
+      } else if ($field == "k" &&  strncmp("k(x,y,z) = ", $line, 11) == 0) {
+        if (strpos($value, ",") !== false) {
+          $response["warning"] = "Note that the decimal separator is dot, not comma.";
+        }
+        fprintf($new, "k(x,y,z) = %s\n", $value);
+
+      } else if ($field == "q" &&  strncmp("q(x,y,z) = ", $line, 11) == 0) {
+        if (strpos($value, ",") !== false) {
+          $response["warning"] = "Note that the decimal separator is dot, not comma.";
+        }
+        fprintf($new, "q(x,y,z) = %s\n", $value);
+        
       } else if (strncmp("BC ", $line, 3) == 0 || strncmp("BC\t", $line, 3) == 0) {
 
         // let's parse the existing BC
@@ -207,12 +221,11 @@ if ($field == "E" ||
 
 exec("git commit -a -m 'problem {$field} = {$value}'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git commit {$case["problem"]} {$id}");
-  echo "cannot git commit {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git commit {$id}: {$output[0]}");
 }
 suncae_log("problem {$id} ajax2problem {$field} = {$value}");
+if ($response["error"] != "") {
+  suncae_log("case {$id} error: {$response["error"]}");
+}
 
-
-// TODO: git commit
 return_back_json($response);
