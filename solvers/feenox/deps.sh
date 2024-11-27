@@ -1,6 +1,6 @@
 #!/bin/bash
 
-feenox_version=1.0.78
+feenox_version=1.0.97
 
 # feenox
 echo -n "solvers/feenox... "
