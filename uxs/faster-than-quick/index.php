@@ -734,7 +734,8 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 <script type="text/javascript" src="js/faster-than-quick/ftq.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/<?=$problem?>.js"></script>
 <script>
-var id = "<?=$id?>"
+var id = "<?=$id?>";
+var problem = "<?=$problem?>";
 function geo_ready() {
   // console.log("GEO READY!");
 
@@ -778,7 +779,6 @@ cad__edge<?=$i?>.onclick  = function() { edge_click(<?=$i?>) };
   }
 ?>
 
-//  var problem = "<?=$problem?>";
   change_step(<?= (($has_results)) ? 3 : (($has_mesh_valid) ? 2 : 1)?>);
 }
  </script>
