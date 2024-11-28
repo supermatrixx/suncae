@@ -13,21 +13,35 @@ if ($fee) {
   $bc_i = 0;
   // TODO: allow spacing, spaces in regexps?
   while (($line = fgets($fee)) !== false) {
-    if (strncmp("k(x,y,z) = ", $line, 4) == 0) {
-      preg_match('/k\(x,y,z\).*= (.*)/', $line, $matches);
+    if (strncmp("k(x,y,z) =", $line, 10) == 0 || strncmp("k(x,y,z)=", $line, 9) == 0) {
+      preg_match('/k\(x,y,z\)[ ]*=[ ]*\((.*)\)\*1e-3/', $line, $matches);
       if (count($matches) == 2) {
         $k = $matches[1];
+      } else {
+        $k = sprintf("(%s)*1e3", substr($line, strpos($line, "=")+1));
       }
-    } else if (strncmp("k = ", $line, 4) == 0) {
-      $k = substr($line, 4);
+    } else if (strncmp("k =", $line, 3) == 0 || strncmp("k=", $line, 2) == 0) {
+      preg_match('/k[ ]*=[ ]*\((.*)\)\*1e-3/', $line, $matches);
+      if (count($matches) == 2) {
+        $k = $matches[1];
+      } else {
+        $k = sprintf("(%s)*1e3", substr($line, strpos($line, "=")+1));
+      }
 
-    } else if (strncmp("q(x,y,z) = ", $line, 11) == 0) {
-      preg_match('/q\(x,y,z\).*= (.*)/', $line, $matches);
+    } else if (strncmp("q(x,y,z) =", $line, 10) == 0 || strncmp("q(x,y,z)=", $line, 9) == 0) {
+      preg_match('/q\(x,y,z\)[ ]*=[ ]*(.*)/', $line, $matches);
       if (count($matches) == 2) {
         $q3 = $matches[1];
+      } else {
+        $q3 = substr($line, strpos($line, "=")+1);
       }
-    } else if (strncmp("q = ", $line, 4) == 0) {
-      $q3 = substr($line, 4);
+    } else if (strncmp("q =", $line, 3) == 0 || strncmp("q=", $line, 2) == 0) {
+      preg_match('/q[ ]*=[ ]*(.*)/', $line, $matches);
+      if (count($matches) == 2) {
+        $q3 = $matches[1];
+      } else {
+        $q3 = substr($line, strpos($line, "=")+1);
+      }
 
       
     } else if (strncmp("BC ", $line, 3) == 0) {
@@ -101,16 +115,16 @@ if ($fee) {
 // TODO: use the ones from the javascript: create a script to create both php and js
 $color = array();
 
-$color[0] = [0.00, 0.00, 0.00];
-$color[1] = [0.60, 0.20, 1.00];
-$color[2] = [0.60, 0.80, 0.90];
-$color[3] = [1.00, 0.33, 0.33];
-$color[4] = [0.67, 0.57, 0.57];
-$color[5] = [0.40, 1.00, 0.40];
-$color[6] = [0.16, 0.83, 1.00];
-$color[7] = [1.00, 0.90, 0.50];
-$color[8] = [1.00, 0.00, 0.40];
-$color[9] = [0.16, 0.83, 0.00];
+$color[0]  = [0.00, 0.00, 0.00];
+$color[1]  = [0.60, 0.30, 0.90];
+$color[2]  = [1.00, 0.33, 0.33];
+$color[3]  = [0.67, 0.77, 0.37];
+$color[4]  = [0.16, 0.83, 1.00];
+$color[5]  = [0.40, 1.00, 0.40];
+$color[6]  = [1.00, 0.90, 0.50];
+$color[7]  = [0.40, 0.80, 0.85];
+$color[8]  = [1.00, 0.00, 0.40];
+$color[9]  = [0.16, 0.83, 0.00];
 $color[10] = [1.00, 0.40, 0.00];
 
 title_left("Problem definition");
@@ -294,7 +308,7 @@ push_accordion_item("materialproperties", "problem", "Material properties", fals
       <div class="input-group">
        <input type="text" class="form-control" name="k" id="text_k" value="<?=$k?>" onblur="ajax2problem(this.name, this.value)">
        <!-- TODO: choose units -->
-       <span class="input-group-text"><?=$label["Wmm-1K-1"]?></span>
+       <span class="input-group-text"><?=$label["Wm-1K-1"]?></span>
       </div>
      </div>
     </div> 

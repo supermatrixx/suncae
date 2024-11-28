@@ -778,6 +778,7 @@ cad__edge<?=$i?>.onclick  = function() { edge_click(<?=$i?>) };
   }
 ?>
 
+//  var problem = "<?=$problem?>";
   change_step(<?= (($has_results)) ? 3 : (($has_mesh_valid) ? 2 : 1)?>);
 }
  </script>

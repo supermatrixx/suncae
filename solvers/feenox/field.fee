@@ -2,7 +2,15 @@ DEFAULT_ARGUMENT_VALUE 2 sigma
 READ_MESH ${1}.vtk DIM 3 READ_FIELD ${2} AS field
 
 maximum = vecmax(vec_field)
+minimum = vecmin(vec_field)
 VECTOR normalized[nodes]
-normalized[i] = vec_field[i]/maximum
+normalized[i] = (vec_field[i]-minimum)/(maximum-minimum)
+
+OUTPUT_FILE max PATH ${1}-max.json
+# TODO: implement PRINTF with FILE
+PRINT FILE max "\{"
+PRINT FILE max " \"max\": " maximum ","
+PRINT FILE max " \"min\": " minimum
+PRINT FILE max "\}"
 
 PRINT_VECTOR %.3f normalized

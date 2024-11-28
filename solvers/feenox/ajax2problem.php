@@ -55,7 +55,7 @@ if ($field == "E" ||
         if (strpos($value, ",") !== false) {
           $response["warning"] = "Note that the decimal separator is dot, not comma.";
         }
-        fprintf($new, "k(x,y,z) = %s\n", $value);
+        fprintf($new, "k(x,y,z) = (%s)*1e-3\n", $value);
 
       } else if ($field == "q" &&  strncmp("q(x,y,z) = ", $line, 11) == 0) {
         if (strpos($value, ",") !== false) {
@@ -219,9 +219,13 @@ if ($field == "E" ||
   }
 }
 
-exec("git commit -a -m 'problem {$field} = {$value}'", $output, $result);
-if ($result != 0) {
-  return_error_json("cannot git commit {$id}: {$output[0]}");
+// see if there's something to commit
+exec("git status --porcelain", $output, $result);
+if (count($output) > 0) {
+  exec("git commit -a -m 'problem {$field} = {$value}'", $output, $result);
+  if ($result != 0) {
+    return_error_json("cannot git commit {$id}: {$output[0]} {$output[1]}");
+  }
 }
 suncae_log("problem {$id} ajax2problem {$field} = {$value}");
 if ($response["error"] != "") {

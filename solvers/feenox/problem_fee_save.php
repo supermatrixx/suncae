@@ -5,7 +5,13 @@
 
 chdir("../data/{$username}/cases/{$id}");
 $fee = fopen("case.fee", "w");
-fwrite($fee, "PROBLEM mechanical\n");
+
+// TODO: each problem has to give this "translation"
+if ($problem == "mechanical") {
+  fwrite($fee, "PROBLEM mechanical\n");
+} else {
+  fwrite($fee, "PROBLEM thermal\n");
+}
 $mesh_hash = mesh_hash();
 // TODO: xxx
 //fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-2.msh\";\n");

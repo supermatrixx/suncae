@@ -803,7 +803,11 @@ function set_current_step(response) {
     bounding_box("hide");
     mesh_lines("hide")
     mesh_triangles("hide")
-    results_lines("show");
+    if (problem == "mechanical") {
+      results_lines("hide");
+    } else {
+      results_lines("hide");
+    }      
     results_faces("show");
   }
   

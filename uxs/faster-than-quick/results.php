@@ -76,7 +76,7 @@ if (file_exists("{$case_dir}/run/{$problem_hash}.vtk")) {
 pop_accordion_item();
 push_accordion_item("probe", "results", "Probe point", false);
 ?>
-<h2>Not yet implemented</h2>
+<h5>Not yet implemented</h5>
 <?php
 pop_accordion_item();
 
@@ -101,7 +101,7 @@ if ($console != "") {
 
 push_accordion_item("advanced", "results", "Advanced post-processing", false);
 ?>
-<h2>Not yet implemented</h2>
+<h5>Not yet implemented</h5>
 <?php
 pop_accordion_item();
 pop_accordion();

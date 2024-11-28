@@ -39,5 +39,7 @@ Wmm-2K           \\text{W}\\cdot\\text{mm}^{-2}
 Wmm-2K-1         \\text{W}\\cdot\\text{mm}^{-2}\\cdot\\text{K}^{-1}
 k=               k(x,y,z)=
 q3=              q^{\\prime\\prime\\prime}(x,y,z)=
-Wmm-1K-1         \\text{W}\\cdot\\text{mm}^{-1}\\cdot\\text{K}^{-1}
+Wm-1K-1          \\text{W}\\cdot\\text{m}^{-1}\\cdot\\text{K}^{-1}
 Wmm-3            \\text{W}\\cdot\\text{mm}^{-3}
+maxT             \\max{\\|T(x,y,z)\\|}
+minT             \\min{\\|T(x,y,z)\\|}
