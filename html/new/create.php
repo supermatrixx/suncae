@@ -60,36 +60,26 @@ fclose($gitignore);
 // exec("git init --initial-branch=main", $output, $result);
 exec("git init", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git init {$case["problem"]} {$id}");
-  echo "cannot git init {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git init {$case["problem"]} {$id}");
 }
 
 exec("git config user.name '{$username}'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot set user.name {$case["problem"]} {$id}");
-  echo "cannot set user.name {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot set user.name {$case["problem"]} {$id}");
 }
 
 exec("git config user.email '{$username}@suncae'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot set user.email {$case["problem"]} {$id}");
-  echo "cannot set user.email {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot set user.email {$case["problem"]} {$id}");
 }
 
 exec("git add .", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git add {$case["problem"]} {$id}");
-  echo "cannot git add {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git add {$case["problem"]} {$id}");
 }
 exec("git commit -m 'initial commit'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git commit {$case["problem"]} {$id}");
-  echo "cannot git commit {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git commit {$case["problem"]} {$id}");
 }
 
 suncae_log("created problem {$case["problem"]} {$id}");

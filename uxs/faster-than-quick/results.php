@@ -12,7 +12,7 @@ push_accordion_item("currentresults", "results", "Summary", true);
 
 if ($has_results) {
 
-  include("results/{$case["problem"]}.php");
+  include("results/{$problem}.php");
   
 } else if ($has_results_attempt) {
   if ($results_meta["status"] == "canceled") {

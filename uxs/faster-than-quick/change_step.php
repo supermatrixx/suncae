@@ -72,7 +72,7 @@ switch ($next_step) {
       }
       exec("../../../../bin/feenox -c case.fee 2> run/{$problem_hash}-check.2", $output, $result);
       if ($result == 0) {
-        exec("../../../../solvers/feenox/solve.sh {$case["problem"]} > run/solving.log 2>&1 & echo $! > run/solving.pid");
+        exec("../../../../solvers/feenox/solve.sh {$problem} > run/solving.log 2>&1 & echo $! > run/solving.pid");
         $results_meta["status"] = "running";
         suncae_log("{$id} problem running");
       } else {

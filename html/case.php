@@ -125,10 +125,10 @@ if ($has_mesh_attempt && ($mesh_meta = json_decode(file_get_contents($mesh_meta_
 
 $results_meta_path = "{$case_dir}/run/{$problem_hash}.json";
 
-// TODO: non-mechanical
-if ($case["problem"] == "mechanical") {
+// TODO: per-problem data
+if ($problem == "mechanical") {
   $results_data_path = "{$case_dir}/run/{$problem_hash}-displacements.dat";
-} else if ($case["problem"] == "heat_conduction") {
+} else if ($problem == "heat_conduction") {
   $results_data_path = "{$case_dir}/run/{$problem_hash}-T.dat";
 }
 $has_results = file_exists($results_data_path);

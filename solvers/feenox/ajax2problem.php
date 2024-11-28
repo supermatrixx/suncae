@@ -159,9 +159,9 @@ if ($field == "E" ||
           }
           if ($n_values == 0) {
             // TODO: provide a per-problem "default BC"
-            if ($case["problem"] == "mechanical") {
+            if ($problem == "mechanical") {
               $bc_value[0] = "fixed";
-            } else if ($case["problem"] == "heat_conduction") {
+            } else if ($problem == "heat_conduction") {
               $bc_value[0] = "adiabatic";
             }
             $n_values = 1;

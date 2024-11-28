@@ -346,19 +346,19 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
           </div> 
          </div> 
          
-         <div class="col-3 text-end p-1">
+<!--    TODO: each problem should have "has warp" -->
+         <div class="col-3 text-end p-1 <?=($problem == "mechanical")?"":"d-none"?>">
           <label id="label_results_lines" for="check_results_lines" class="form-label">Warped</label>
          </div> 
-         <div class="col-1 text-end p-1">
+         <div class="col-1 text-end p-1 <?=($problem == "mechanical")?"":"d-none"?>">
           <label id="label_results_lines" for="check_results_lines" class="form-label"><i class="bi bi-box-arrow-up-right"></i></label>
          </div> 
-         <div class="col-2 p-1">
+         <div class="col-2 p-1 <?=($problem == "mechanical")?"":"d-none"?>">
           <div class="form-check form-switch">
            <input class="form-check-input" type="checkbox" id="check_results_lines" onchange="results_lines('toggle')">
           </div> 
          </div> 
-         
-                  
+                 
         </div>
 <!--
         <div class="row">
@@ -732,7 +732,7 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 <script type="text/javascript" src="js/faster-than-quick/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/x3dom.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/ftq.js"></script>
-<script type="text/javascript" src="js/faster-than-quick/<?=$case["problem"]?>.js"></script>
+<script type="text/javascript" src="js/faster-than-quick/<?=$problem?>.js"></script>
 <script>
 var id = "<?=$id?>"
 function geo_ready() {
