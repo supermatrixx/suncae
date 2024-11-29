@@ -30,9 +30,11 @@ html {
 body {
   font-family: Carlito;
 }
-#cube_canvas {
- position: fixed;
- bottom: 0;
- right: 0;
- border: 3px solid #73AD21; 
-}
+
+/* #cube_canvas { */
+/*  position: fixed; */
+/*  bottom: 0; */
+/*  right·: 0; */
+/*  border: 3px solid #73AD21; */
+/*  background-color: red; */
+/* } */

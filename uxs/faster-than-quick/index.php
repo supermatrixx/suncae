@@ -374,7 +374,11 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 
 
         <button class="btn btn-primary" onClick="fit_all_view()">Fit all</button>
-      
+
+<?php
+include("small_axes.html");
+?>
+        
 
        </div>
       </div>
@@ -441,11 +445,6 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 <!--  TODO: dismiss button    -->
     <div id="warning_message" class="small alert alert-dismissible alert-warning d-none"></div>
     <div id="error_message" class="small alert alert-dismissible alert-danger d-none"></div>
-
-<?php
-// include("small_axes.html");
-?>
-    
    </div> 
 
 <!-- ............................................................................................................ -->
@@ -469,8 +468,6 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
         fieldOfView="<?=$cad["fieldOfView"]?>"
         zFar="1e6">
       </OrthoViewpoint>
-<!--       <Viewpoint id="main_viewpoint" position="0.00000 1.00000 20.00000" orientation="0.00000 0.00000 0.00000 0.00000" zNear="0.01090" zFar="108.97324" description=""></Viewpoint> -->
-     
       <Group id="solid_plus_clip">
       
        <!-- CAD -->
@@ -768,7 +765,7 @@ cad__edge<?=$i?>.onclick  = function() { edge_click(<?=$i?>) };
   }
 */
 
-  // init_small_axes();
+  init_small_axes();
 <?php
   if ($has_mesh) {
 ?>

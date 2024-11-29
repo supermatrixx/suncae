@@ -136,8 +136,8 @@ function toggle_toolbar(bar, size) {
 // -------------------------------------------
 function init_small_axes() {
   // TODO: choose to use or not
-  // main_viewpoint.addEventListener("viewpointChanged", update_named_cube, false);
-  // small_axes.setAttribute("render", "true");
+  main_viewpoint.addEventListener("viewpointChanged", update_named_cube, false);
+  small_axes.setAttribute("render", "true");
 }
 
 // -------------------------------------------
