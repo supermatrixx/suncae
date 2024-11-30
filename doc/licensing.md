@@ -8,7 +8,7 @@
     you) as you seem fit (i.e. to suit your needs)
  2. **Redistribute** copies of the source code as
     you seem fit (i.e. to help your neighbor)
- 3  **Publish** your changes (or the ones that
+ 3. **Publish** your changes (or the ones that
     the people you hired made) to the public (i.e. to benefit the
     community).
 
