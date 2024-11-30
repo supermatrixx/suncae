@@ -26,6 +26,7 @@ function return_back_json($response) {
 
 function return_error_json($error) {
   $response["error"] = $error;
+  suncae_log($error);
   return_back_json($response);
   exit();
 }

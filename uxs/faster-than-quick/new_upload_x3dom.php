@@ -5,7 +5,7 @@
 ?>
      <div class="mb-3">
       <label for="cad" class="form-label">
-       <span class="badge text-bg-primary" id="badge_cad">1</span>&nbsp;CAD file
+       <span class="badge text-bg-primary" id="badge_cad">1</span>&nbsp;CAD file in <a href="https://en.wikipedia.org/wiki/ISO_10303-21" target="_blank">STEP</a> format
       </label>
       <div id="cad_upload">
        <input class="form-control form-control-lg" style="height: 350px" id="cad" type="file" onchange="upload_file()">

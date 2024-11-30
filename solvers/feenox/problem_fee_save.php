@@ -5,9 +5,16 @@
 
 chdir("../data/{$username}/cases/{$id}");
 $fee = fopen("case.fee", "w");
-fwrite($fee, "PROBLEM mechanical\n");
+
+// TODO: this does not allow to choose PETSc solvers and that kind of things
+fwrite($fee, "PROBLEM {$problem_name[$problem]}\n");
+
 $mesh_hash = mesh_hash();
-fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-2.msh\";\n");
+if ($mesh_order[$problem] == 1) {
+  fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}.msh\";\n");
+} else {
+  fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-{$mesh_order[$problem]}.msh\";\n");
+}
 fwrite($fee, $_POST["fee"]);
 fclose($fee);
 

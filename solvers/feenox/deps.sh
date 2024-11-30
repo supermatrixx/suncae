@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/false
 
 feenox_version=1.0.97
 

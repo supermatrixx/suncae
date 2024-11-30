@@ -18,6 +18,8 @@ if (chdir("../data/{$username}/cases/{$id}") === false) {
 // TODO: per-physics
 if ($field == "E" ||
     $field == "nu" ||
+    $field == "k" ||
+    $field == "q" ||
     strncmp($field, "bc_", 3) == 0) {
 
   $bc_n = 0;
@@ -49,6 +51,18 @@ if ($field == "E" ||
         }
         fprintf($new, "nu = %s\n", $value);
 
+      } else if ($field == "k" &&  strncmp("k(x,y,z) = ", $line, 11) == 0) {
+        if (strpos($value, ",") !== false) {
+          $response["warning"] = "Note that the decimal separator is dot, not comma.";
+        }
+        fprintf($new, "k(x,y,z) = (%s)*1e-3\n", $value);
+
+      } else if ($field == "q" &&  strncmp("q(x,y,z) = ", $line, 11) == 0) {
+        if (strpos($value, ",") !== false) {
+          $response["warning"] = "Note that the decimal separator is dot, not comma.";
+        }
+        fprintf($new, "q(x,y,z) = %s\n", $value);
+        
       } else if (strncmp("BC ", $line, 3) == 0 || strncmp("BC\t", $line, 3) == 0) {
 
         // let's parse the existing BC
@@ -144,7 +158,12 @@ if ($field == "E" ||
             }
           }
           if ($n_values == 0) {
-            $bc_value[0] = "fixed";
+            // TODO: provide a per-problem "default BC"
+            if ($problem == "mechanical") {
+              $bc_value[0] = "fixed";
+            } else if ($problem == "heat_conduction") {
+              $bc_value[0] = "adiabatic";
+            }
             $n_values = 1;
           }
           
@@ -200,14 +219,17 @@ if ($field == "E" ||
   }
 }
 
-exec("git commit -a -m 'problem {$field} = {$value}'", $output, $result);
-if ($result != 0) {
-  suncae_log("cannot git commit {$case["problem"]} {$id}");
-  echo "cannot git commit {$case["problem"]} {$id}";
-  exit(1);
+// see if there's something to commit
+exec("git status --porcelain", $output, $result);
+if (count($output) > 0) {
+  exec("git commit -a -m 'problem {$field} = {$value}'", $output, $result);
+  if ($result != 0) {
+    return_error_json("cannot git commit {$id}: {$output[0]} {$output[1]}");
+  }
 }
 suncae_log("problem {$id} ajax2problem {$field} = {$value}");
+if ($response["error"] != "") {
+  suncae_log("case {$id} error: {$response["error"]}");
+}
 
-
-// TODO: git commit
 return_back_json($response);

@@ -1,0 +1,8 @@
+DEFAULT_ARGUMENT_VALUE 2 sigma
+READ_MESH ${1}-1.vtk DIM 3 READ_FIELD ${2} AS field
+
+maximum = vecmax(vec_field)
+VECTOR normalized[nodes]
+normalized[i] = vec_field[i]/maximum
+
+PRINT_VECTOR %.3f normalized

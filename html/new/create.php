@@ -7,6 +7,12 @@ include("../../conf.php");
 include("../../auths/{$auth}/auth.php");
 include("../common.php");
 
+$problem = $_POST["problem"];
+$mesher = $_POST["mesher"];
+$solver = $_POST["solver"];
+include("../../solvers/{$solver}/input_initial_{$problem}.php");
+
+
 if (file_exists("../../data/{$username}/cases") ==  false) {
   if (mkdir("../../data/{$username}/cases", $permissions, true) == false) {
     echo "error: cannot create cases directory";
@@ -28,9 +34,6 @@ $id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
 // }
 
 
-
-
-
 mkdir($id, $permissions, true);
 chdir($id);
 
@@ -41,25 +44,14 @@ $case["id"] = $id;
 $case["owner"] = $username;
 $case["date"] = time();
 $case["cad"] = $cad;
-// TODO: choose
-$case["problem"] = "mechanical";
-$case["mesher"] = "gmsh";
-$case["solver"] = "feenox";
+$case["problem"] = $problem;
+$case["mesher"] = $mesher;
+$case["solver"] = $solver;
 $case["name"] = isset($_POST["name"]) ? $_POST["name"] : "Unnamed";
 $case["visibility"] = "public";
 yaml_emit_file("case.yaml", $case);
 
-// TODO: per problem!
-$fee = fopen("case.fee", "w");
-fprintf($fee, "PROBLEM %s\n", $case["problem"]);
-fprintf($fee, "READ_MESH meshes/%s-2.msh\n", md5_file("mesh.geo"));
-fprintf($fee, "\n");
-fprintf($fee, "E(x,y,z) = (200)*1e3\n");
-fprintf($fee, "nu = 0.3\n");
-fprintf($fee, "\n");
-fprintf($fee, "SOLVE_PROBLEM\n");
-fprintf($fee, "WRITE_RESULTS FORMAT vtk all\n");
-fclose($fee);
+solver_input_write_initial("case.fee", $case["problem"]);
 
 $gitignore = fopen(".gitignore", "w");
 fprintf($gitignore, "run");
@@ -69,36 +61,26 @@ fclose($gitignore);
 // exec("git init --initial-branch=main", $output, $result);
 exec("git init", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git init {$case["problem"]} {$id}");
-  echo "cannot git init {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git init {$case["problem"]} {$id}");
 }
 
 exec("git config user.name '{$username}'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot set user.name {$case["problem"]} {$id}");
-  echo "cannot set user.name {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot set user.name {$case["problem"]} {$id}");
 }
 
 exec("git config user.email '{$username}@suncae'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot set user.email {$case["problem"]} {$id}");
-  echo "cannot set user.email {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot set user.email {$case["problem"]} {$id}");
 }
 
 exec("git add .", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git add {$case["problem"]} {$id}");
-  echo "cannot git add {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git add {$case["problem"]} {$id}");
 }
 exec("git commit -m 'initial commit'", $output, $result);
 if ($result != 0) {
-  suncae_log("cannot git commit {$case["problem"]} {$id}");
-  echo "cannot git commit {$case["problem"]} {$id}";
-  exit(1);
+  return_error_json("cannot git commit {$case["problem"]} {$id}");
 }
 
 suncae_log("created problem {$case["problem"]} {$id}");

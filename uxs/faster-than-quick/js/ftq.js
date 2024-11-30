@@ -23,44 +23,10 @@ var bootstrap_sizes = ["xs", "sm", "md", "lg", "xl", "xxl"];
 var color = {};
 color["base"] =    [0.65, 0.65, 0.65];
 color["general"] = [0.80, 0.80, 0.80];
-color["solids"] =  [1.00, 1.00, 1.00];
-color["hide"] =    [1.00, 0.25, 0.50];
-color["measure"] = [0.38, 0.13, 0.76];
+// color["solids"] =  [1.00, 1.00, 1.00];
+// color["hide"] =    [1.00, 0.25, 0.50];
+// color["measure"] = [0.38, 0.13, 0.76];
 color["error"] =   [1.00, 0.00, 0.00];
-
-color["bc_1"] = [0.82, 0.22, 0.68];
-color["bc_2"] = [0.37, 0.85, 0.16];
-color["bc_3"] = [0.93, 0.91, 0.26];
-color["bc_4"] = [0.33, 0.86, 1.00];
-color["bc_5"] = [1.00, 0.66, 0.66];
-color["bc_6"] = [1.00, 0.50, 0.50];
-color["bc_7"] = [0.00, 0.80, 1.00];
-color["bc_8"] = [0.55, 0.37, 0.82];
-color["bc_9"] = [0.00, 1.00, 0.80];
-color["bc_10"] = [1.00, 0.40, 0.00];
-
-color["bc_10"] = [0.10, 0.25, 0.50];
-color["bc_11"] = [1.00, 0.80, 0.16];
-color["bc_12"] = [0.75, 0.15, 0.90];
-color["bc_13"] = [0.55, 0.01, 0.22];
-color["bc_14"] = [0.17, 0.38, 0.01];
-color["bc_15"] = [0.78, 0.44, 0.21];
-color["bc_16"] = [1.00, 0.25, 0.50];
-color["bc_17"] = [0.25, 0.83, 0.60];
-color["bc_18"] = [0.35, 0.75, 0.60];
-color["bc_19"] = [0.21, 0.78, 0.78];
-
-// color["bc_1"] = [0.40, 0.00, 1.00];
-// color["bc_2"] = [0.80, 0.90, 0.85];
-// color["bc_3"] = [1.00, 0.33, 0.33];
-// color["bc_4"] = [0.67, 0.57, 0.57];
-// color["bc_5"] = [0.40, 1.00, 0.40];
-// color["bc_6"] = [0.16, 0.83, 1.00];
-// color["bc_7"] = [1.00, 0.90, 0.50];
-// color["bc_8"] = [1.00, 0.00, 0.40];
-// color["bc_9"] = [0.16, 0.83, 0.00];
-// color["bc_10"] = [1.00, 0.40, 0.00];
-
 
 color["refinement_1"] = [1.00, 0.40, 0.00];
 color["refinement_2"] = [0.40, 0.00, 1.00];
@@ -170,8 +136,8 @@ function toggle_toolbar(bar, size) {
 // -------------------------------------------
 function init_small_axes() {
   // TODO: choose to use or not
-  // main_viewpoint.addEventListener("viewpointChanged", update_named_cube, false);
-  // small_axes.setAttribute("render", "true");
+  main_viewpoint.addEventListener("viewpointChanged", update_named_cube, false);
+  small_axes.setAttribute("render", "true");
 }
 
 // -------------------------------------------
@@ -401,11 +367,11 @@ function update_mesh(mesh_hash = "") {
       // convert from IndexedTriangleSet to IndexedFaceSet
       let array = value.split(" ");
       for (let i = 0; i < array.length; i += 3) {
-        results_indexedfaceset_set += array[i+0] + " " + array[i+1] + " " + array[i+2] + " " + array[i+0] + "-1 ";
+        results_indexedfaceset_set += array[i+0] + " " + array[i+1] + " " + array[i+2] + " " + array[i+0] + " -1 ";
       }
 
       // TODO: real bc colors
-      faces_html += '<Shape><Appearance><Material diffuseColor="' + color["base"][0] + ' ' + color["base"][1] + ' ' + color["base"][2] +  '"></Material></Appearance><IndexedTriangleSet normalPerVertex="false" solid="false" index="' + value + '"><Coordinate USE="nodes"></Coordinate></IndexedTriangleSet></Shape>';
+      faces_html += '<Shape><Appearance><Material diffuseColor="' + color["base"][0] + ' ' + color["base"][1] + ' ' + color["base"][2] +  '"></Material></Appearance><IndexedTriangleSet normalPerVertex="false" solid="false" index="' + value + '"><Coordinate use="nodes"></Coordinate></IndexedTriangleSet></Shape>';
     }
     surfaces_faces.innerHTML = faces_html;
     if (mesh_hash != "") {
@@ -435,35 +401,48 @@ function update_results(problem_hash = "") {
     }
 
     if (data["error"] === undefined || data["error"] == "") {
-    
-      // range_warp.setAttribute("max", warp_max);
-      // range_warp.setAttribute("step", warp_max/100);
 
       let coord_indexes = surfaces_edges_set.getAttribute("coordIndex");
       let nodes = document.getElementById("nodes").getAttribute("point");
-      let nodes_warped = data["nodes_warped"];
-
-      results_surfaces_edges.innerHTML = '\
+      
+      if (data["nodes_warped"] !== undefined) {
+        results_surfaces_edges.innerHTML = '\
 <Appearance><Material emissiveColor="0 0 0" diffuseColor="0 0 0"></Material></Appearance>\
 <IndexedLineSet coordIndex="' + coord_indexes + '"><Coordinate id="nodes_warped"></Coordinate></IndexedLineSet>\
 <ScalarInterpolator id="si" key="0 1" keyValue="0 1"><ScalarInterpolator>\
-<CoordinateInterpolator id="ci" key="0 1" keyValue="' + nodes + ' ' + nodes_warped + '"></CoordinateInterpolator>\
+<CoordinateInterpolator id="ci" key="0 1" keyValue="' + nodes + ' ' + data["nodes_warped"] + '"></CoordinateInterpolator>\
 <Route fromNode="ci" fromField="value_changed" toNode="nodes_warped" toField="point"></Route>\
 <Route fromNode="si" fromField="value_changed" toNode="ci" toField="set_fraction"></Route>';
-
-      si.setAttribute("set_fraction", "0");
+        si.setAttribute("set_fraction", "0");
+      } else {
+        results_surfaces_edges.innerHTML = '\
+<Appearance><Material emissiveColor="0 0 0" diffuseColor="0 0 0"></Material></Appearance>\
+<IndexedLineSet coordIndex="' + coord_indexes + '"><Coordinate use="nodes"></Coordinate></IndexedLineSet>';
+      }
 
       let color_string = "";
       let array = data["field"].trim().split(" ");
-      // theseus_log(array.length);
-      for (let i = 0; i < array.length; i++) {
-        color_string += palette(array[i], "sigma") + ", ";
-      }
+      // TODO: read the field name from the ajax
+      if (problem == "mechanical") {
+        for (let i = 0; i < array.length; i++) {
+          color_string += palette(array[i], "sigma") + ", ";
+        }
+      } else if (problem == "heat_conduction") {
+        for (let i = 0; i < array.length; i++) {
+          color_string += palette(array[i], "temperature") + ", ";
+        }
+      }        
 
+      // TODO: improve
+      if (problem == "mechanical") {
+        coords_use = "nodes_warped";
+      } else {
+        coords_use = "nodes";
+      }
       results_surfaces_faces.innerHTML = '\
 <appearance><Material shininess="0.1"></Material></appearance>\
 <IndexedFaceSet colorPerVertex="true" normalPerVertex="false" solid="false" coordIndex="' + results_indexedfaceset_set + '">\
-<Coordinate use="nodes_warped"></Coordinate>\
+<Coordinate use="'+coords_use+'"></Coordinate>\
 <Color id="color_scalar" color="'+ color_string +'"></Color>\
 </IndexedFaceSet>';
     
@@ -666,7 +645,7 @@ function ajax2mesh(field, value) {
 function change_step(step) {
 
   next_step = step;
-  theseus_log("change_step("+next_step+")")
+  // theseus_log("change_step("+next_step+")")
 
   // update nav, remove all classes
   for (let i = 1; i <= 3; i++) {
@@ -751,16 +730,6 @@ function ajax_change_step() {
       return;
     }
 
-/*
-    if (response.mesh !== undefined) {
-      current_mesh = response.mesh;
-    }
-    if (response.results !== undefined) {
-      current_results = response.results;
-    }
-*/
-
-    
     if (response.url !== undefined && response.step !== undefined) {
       
       let ajax_left = new XMLHttpRequest();
@@ -835,8 +804,13 @@ function set_current_step(response) {
     cad_vertices(0);
     bounding_box("hide");
     mesh_lines("hide")
-    mesh_triangles("hide")
-    results_lines("show");
+    mesh_triangles("hide");
+    // TODO: improve
+    if (problem == "mechanical") {
+      results_lines("show");
+    } else {
+      results_lines("hide");
+    }      
     results_faces("show");
   }
   
@@ -1743,33 +1717,12 @@ function bc_remove(i) {
   change_step(2);
 }
 
-function bc_hide_all(i) {
-  bootstrap_hide("bc_value_"+i+"_custom");
-  bootstrap_hide("bc_value_"+i+"_fixture");
-  bootstrap_hide("bc_value_"+i+"_pressure");
-}
-
 function bc_update_type(i, type) {
   theseus_log("update " + i + " " + type);
   bc_hide_all(i);
   bootstrap_block("bc_value_"+i+"_"+type);
 }
 
-
-function bc_fixture_update(i) {
-  string = "";
-  if (document.getElementById("bc_"+i+"_fixture_u").checked) {
-    string += "u=0 ";
-  }
-  if (document.getElementById("bc_"+i+"_fixture_v").checked) {
-    string += "v=0 ";
-  }
-  if (document.getElementById("bc_"+i+"_fixture_w").checked) {
-    string += "w=0 ";
-  }
-  
-  ajax2problem("bc_"+i+"_value" , string);
-}
 
 function bc_change_filter(i, what) {
   let text = document.getElementById("text_bc_"+i+"_groups");

@@ -31,3 +31,15 @@ ymin             y_\\text{min}
 ymax             y_\\text{max}
 zmin             z_\\text{min}
 zmax             z_\\text{max}
+T=               T=
+h=               h=
+q2=              q^{\\prime\\prime}=
+K                \\text{K}
+Wmm-2K           \\text{W}\\cdot\\text{mm}^{-2}
+Wmm-2K-1         \\text{W}\\cdot\\text{mm}^{-2}\\cdot\\text{K}^{-1}
+k=               k(x,y,z)=
+q3=              q^{\\prime\\prime\\prime}(x,y,z)=
+Wm-1K-1          \\text{W}\\cdot\\text{m}^{-1}\\cdot\\text{K}^{-1}
+Wmm-3            \\text{W}\\cdot\\text{mm}^{-3}
+maxT             \\max{\\|T(x,y,z)\\|}
+minT             \\min{\\|T(x,y,z)\\|}

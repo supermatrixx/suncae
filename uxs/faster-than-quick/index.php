@@ -346,19 +346,19 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
           </div> 
          </div> 
          
-         <div class="col-3 text-end p-1">
+<!--    TODO: each problem should have "has warp" -->
+         <div class="col-3 text-end p-1 <?=($problem == "mechanical")?"":"d-none"?>">
           <label id="label_results_lines" for="check_results_lines" class="form-label">Warped</label>
          </div> 
-         <div class="col-1 text-end p-1">
+         <div class="col-1 text-end p-1 <?=($problem == "mechanical")?"":"d-none"?>">
           <label id="label_results_lines" for="check_results_lines" class="form-label"><i class="bi bi-box-arrow-up-right"></i></label>
          </div> 
-         <div class="col-2 p-1">
+         <div class="col-2 p-1 <?=($problem == "mechanical")?"":"d-none"?>">
           <div class="form-check form-switch">
            <input class="form-check-input" type="checkbox" id="check_results_lines" onchange="results_lines('toggle')">
           </div> 
          </div> 
-         
-                  
+                 
         </div>
 <!--
         <div class="row">
@@ -374,7 +374,11 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 
 
         <button class="btn btn-primary" onClick="fit_all_view()">Fit all</button>
-      
+
+<?php
+include("small_axes.html");
+?>
+        
 
        </div>
       </div>
@@ -441,11 +445,6 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 <!--  TODO: dismiss button    -->
     <div id="warning_message" class="small alert alert-dismissible alert-warning d-none"></div>
     <div id="error_message" class="small alert alert-dismissible alert-danger d-none"></div>
-
-<?php
-// include("small_axes.html");
-?>
-    
    </div> 
 
 <!-- ............................................................................................................ -->
@@ -469,8 +468,6 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
         fieldOfView="<?=$cad["fieldOfView"]?>"
         zFar="1e6">
       </OrthoViewpoint>
-<!--       <Viewpoint id="main_viewpoint" position="0.00000 1.00000 20.00000" orientation="0.00000 0.00000 0.00000 0.00000" zNear="0.01090" zFar="108.97324" description=""></Viewpoint> -->
-     
       <Group id="solid_plus_clip">
       
        <!-- CAD -->
@@ -732,10 +729,12 @@ var solid_base_color = <?=json_encode($cad["color"])?>;
 <script type="text/javascript" src="js/faster-than-quick/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/x3dom.js"></script>
 <script type="text/javascript" src="js/faster-than-quick/ftq.js"></script>
+<script type="text/javascript" src="js/faster-than-quick/<?=$problem?>.js"></script>
 <script>
-var id = "<?=$id?>"
+var id = "<?=$id?>";
+var problem = "<?=$problem?>";
 function geo_ready() {
-  console.log("GEO READY!");
+  // console.log("GEO READY!");
 
 <?php
 // TODO: php or javascript?
@@ -766,7 +765,7 @@ cad__edge<?=$i?>.onclick  = function() { edge_click(<?=$i?>) };
   }
 */
 
-  // init_small_axes();
+  init_small_axes();
 <?php
   if ($has_mesh) {
 ?>

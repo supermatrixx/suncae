@@ -4,4 +4,4 @@
 // SunCAE is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
 // register_solver("feenox", "FeenoX", ["mechanical", "modal", "heat_conduction", "buckling"], ["gmsh"]);
-register_solver("feenox", "FeenoX", ["mechanical"], ["gmsh"]);
+register_solver("feenox", "FeenoX", ["mechanical", "heat_conduction"], ["gmsh"]);
