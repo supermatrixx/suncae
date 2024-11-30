@@ -22,48 +22,6 @@ function mesh_hash() {
   }
 }
 
-// TODO: per solver
-function problem_hash() {
-  global $username, $id;
-  if (file_exists("case.fee")) {
-    return md5_file("case.fee");
-  } else {
-    return md5_file("../data/{$username}/cases/{$id}/case.fee");
-  }
-}
-
-// TODO: per solver
-function update_mesh_in_fee() {
-  global $username;
-  global $id;
-  global $mesh_hash;
-  $real_mesh_hash = mesh_hash();
-  if ($real_mesh_hash != $mesh_hash) {
-    // TODO: lock
-    $current = fopen("../data/{$username}/cases/{$id}/case.fee", "r");
-    $new = fopen("../data/{$username}/cases/{$id}/new.fee", "w");
-    if ($current && $new) {
-      while (($line = fgets($current)) !== false) {
-        if (strncmp("READ_MESH", $line, 9) == 0) {
-          // TODO: xxx
-          fprintf($new, "READ_MESH meshes/%s.msh\n", $real_mesh_hash);
-//          fprintf($new, "READ_MESH meshes/%s-2.msh\n", $real_mesh_hash);
-        } else {
-          fwrite($new, $line);
-        }
-      }
-      fclose($current);
-      fclose($new);
-
-      if (rename("../data/{$username}/cases/{$id}/new.fee", "../data/{$username}/cases/{$id}/case.fee") !== true) {
-        return_error_json("Cannot update fee");
-      }
-    } else {
-      return_error_json("cannot open case.fee");
-    }
-  }
-}
-
 
 $case_dir = "../data/{$username}/cases/{$id}";
 if (($case_yaml = file_get_contents("{$case_dir}/case.yaml")) == false) {
@@ -75,8 +33,8 @@ if (($case = yaml_parse($case_yaml)) == null) {
   echo "cannot decode project {$id}";
   exit();
 }
-
 $problem = $case["problem"];
+$solver = $case["solver"];
 
 $cad_dir = "../data/{$username}/cads/{$case["cad"]}";
 if (is_dir("{$cad_dir}/meshes") == false) {
@@ -89,6 +47,8 @@ if (is_dir("{$case_dir}/run") == false) {
 if (file_exists("{$case_dir}/run/meshes") == false) {
   symlink("../../../cads/{$case["cad"]}/meshes", "../data/{$username}/cases/{$id}/run/meshes");
 }
+
+include("../solvers/{$solver}/common.php");
 
   
 if ($mesh_hash == "") {
@@ -111,11 +71,11 @@ if ($has_mesh_attempt && ($mesh_meta = json_decode(file_get_contents($mesh_meta_
     $has_mesh_valid = true;
   } else if ($mesh_meta["status"] == "running") {
     if (isset($mesh_meta["pid"]) == false || posix_getpgid($mesh_meta["pid"]) == false) {
-      // TODO: mirar el .2
+      // TODO: look at the .2
       $mesh_meta["status"] = "error";
       // TODO: update json
     } else {
-      // TODO: calcular progress
+      // TODO: calculate progress
     }
   }
 }
@@ -126,11 +86,7 @@ if ($has_mesh_attempt && ($mesh_meta = json_decode(file_get_contents($mesh_meta_
 $results_meta_path = "{$case_dir}/run/{$problem_hash}.json";
 
 // TODO: per-problem data
-if ($problem == "mechanical") {
-  $results_data_path = "{$case_dir}/run/{$problem_hash}-displacements.dat";
-} else if ($problem == "heat_conduction") {
-  $results_data_path = "{$case_dir}/run/{$problem_hash}-T.dat";
-}
+$results_data_path = "{$case_dir}/run/{$problem_hash}-{$primary_field[$problem]}.dat";
 $has_results = file_exists($results_data_path);
 $has_results_attempt = file_exists($results_meta_path);
 if ($has_results_attempt && ($results_meta = json_decode(file_get_contents($results_meta_path), true)) != null) {

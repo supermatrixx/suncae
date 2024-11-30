@@ -7,8 +7,10 @@ include("../../conf.php");
 include("../../auths/{$auth}/auth.php");
 include("../common.php");
 
+$problem = $_POST["problem"];
+$mesher = $_POST["mesher"];
 $solver = $_POST["solver"];
-include("../../solvers/{$solver}/input_initial.php");
+include("../../solvers/{$solver}/input_initial_{$problem}.php");
 
 
 if (file_exists("../../data/{$username}/cases") ==  false) {
@@ -42,9 +44,8 @@ $case["id"] = $id;
 $case["owner"] = $username;
 $case["date"] = time();
 $case["cad"] = $cad;
-// TODO: choose
-$case["problem"] = $_POST["problem"];
-$case["mesher"] = $_POST["mesher"];
+$case["problem"] = $problem;
+$case["mesher"] = $mesher;
 $case["solver"] = $solver;
 $case["name"] = isset($_POST["name"]) ? $_POST["name"] : "Unnamed";
 $case["visibility"] = "public";

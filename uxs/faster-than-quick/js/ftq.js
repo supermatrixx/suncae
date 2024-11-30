@@ -422,15 +422,27 @@ function update_results(problem_hash = "") {
 
       let color_string = "";
       let array = data["field"].trim().split(" ");
-      for (let i = 0; i < array.length; i++) {
-        // TODO: read the field name from the ajax
-        color_string += palette(array[i], "temperature") + ", ";
-      }
+      // TODO: read the field name from the ajax
+      if (problem == "mechanical") {
+        for (let i = 0; i < array.length; i++) {
+          color_string += palette(array[i], "sigma") + ", ";
+        }
+      } else if (problem == "heat_conduction") {
+        for (let i = 0; i < array.length; i++) {
+          color_string += palette(array[i], "temperature") + ", ";
+        }
+      }        
 
+      // TODO: improve
+      if (problem == "mechanical") {
+        coords_use = "nodes_warped";
+      } else {
+        coords_use = "nodes";
+      }
       results_surfaces_faces.innerHTML = '\
 <appearance><Material shininess="0.1"></Material></appearance>\
 <IndexedFaceSet colorPerVertex="true" normalPerVertex="false" solid="false" coordIndex="' + results_indexedfaceset_set + '">\
-<Coordinate use="nodes"></Coordinate>\
+<Coordinate use="'+coords_use+'"></Coordinate>\
 <Color id="color_scalar" color="'+ color_string +'"></Color>\
 </IndexedFaceSet>';
     
@@ -633,7 +645,7 @@ function ajax2mesh(field, value) {
 function change_step(step) {
 
   next_step = step;
-  theseus_log("change_step("+next_step+")")
+  // theseus_log("change_step("+next_step+")")
 
   // update nav, remove all classes
   for (let i = 1; i <= 3; i++) {
@@ -718,16 +730,6 @@ function ajax_change_step() {
       return;
     }
 
-/*
-    if (response.mesh !== undefined) {
-      current_mesh = response.mesh;
-    }
-    if (response.results !== undefined) {
-      current_results = response.results;
-    }
-*/
-
-    
     if (response.url !== undefined && response.step !== undefined) {
       
       let ajax_left = new XMLHttpRequest();
@@ -802,9 +804,10 @@ function set_current_step(response) {
     cad_vertices(0);
     bounding_box("hide");
     mesh_lines("hide")
-    mesh_triangles("hide")
+    mesh_triangles("hide");
+    // TODO: improve
     if (problem == "mechanical") {
-      results_lines("hide");
+      results_lines("show");
     } else {
       results_lines("hide");
     }      

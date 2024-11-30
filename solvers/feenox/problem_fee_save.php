@@ -6,16 +6,15 @@
 chdir("../data/{$username}/cases/{$id}");
 $fee = fopen("case.fee", "w");
 
-// TODO: each problem has to give this "translation"
-if ($problem == "mechanical") {
-  fwrite($fee, "PROBLEM mechanical\n");
-} else {
-  fwrite($fee, "PROBLEM thermal\n");
-}
+// TODO: this does not allow to choose PETSc solvers and that kind of things
+fwrite($fee, "PROBLEM {$problem_name[$problem]}\n");
+
 $mesh_hash = mesh_hash();
-// TODO: xxx
-//fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-2.msh\";\n");
-fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}.msh\";\n");
+if ($mesh_order[$problem] == 1) {
+  fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}.msh\";\n");
+} else {
+  fwrite($fee, "READ_MESH \"meshes/{$mesh_hash}-{$mesh_order[$problem]}.msh\";\n");
+}
 fwrite($fee, $_POST["fee"]);
 fclose($fee);
 
