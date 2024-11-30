@@ -1,7 +1,7 @@
-# SunCAE
+# SunCAE documentation
 
  * [Installation guide](INSTALL.md)
-
-## Licensing
-
+ * [Tutorials](tutorials.md)
+ * [FAQs](FAQs.md)
+ * [Licensing](licensing.md)
 

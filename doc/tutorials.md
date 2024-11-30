@@ -112,3 +112,54 @@ The actual result is not important here, because we are far away from the conver
 That was it.
 Let me known in the comments if you have questions or something you'd like me to discuss in other videos.
 Thanks for watching.
+
+## Heat conduction
+
+ - [Tutorial #3: Heat conduction](https://youtu.be/WeEeZ5BVm8I) (3.5 min)
+
+Hello and welcome to this SunCAE tutorial.
+Today we're going to solve a heat conduction problem.
+
+We are going to use a simple square beam.
+Now, we have to choose "heat transfer" and then "heat conduction."
+
+Cool. First thing we are going to do is to add a boundary condition and set temperature equal to zero here.
+And then add another one, temperature equal one here.
+We can check this is the case. Cool. Solve. Ok, we have this nice linear rainbow.
+
+Let's go back and replace the red BC with a prescribed heat flux, let's say ten to minus three.
+The profile is the same but now the temperature is higher.
+
+Another problem. This little beam is ten millimeters long in the x direction.
+Let me put back a temperature here let's put it back equal to one hundred.
+Now let's change the conductivity. It used to be one, let me write one plus x.
+So the conductivity increases along the axial coordinate.
+
+Now the rainbow is hotter.
+If we go back and write eleven minus x.
+It is colder.
+
+
+Another problem. Let me delete this boundary condition and add this face to the purple one.
+So zero and zero.
+Now... let's put back conductivity to one and let's add power, say ten to minus two. 
+Now the center is hot, up to a hundred twenty four.
+
+What if the conductivity depended on temperature?
+Ok, let's say it increases with temperature like linearly, 1+T.
+And now we are solving a non-linear problem under the hood.
+So that center is still hot, but you know, up fifteen not a hundred twenty four.
+This is not physically real, but you get the point, don't you?
+
+Finally, let's go back. Conductivity one again and now the power a sine of x.
+We have stripes. But these stripes don't look good, do they?
+This is because the mesh is pretty coarse.
+So let's go back to the first step and let's change the element size.
+Instead of one, let's pick zero point two.
+And also let's choose algorithm eight in Gmsh which gives nicer tets.
+And now the stripes are nicer. 
+
+That was it.
+Let me known in the comments if you have questions or something you'd like me to discuss in other videos.
+Thanks for watching.
+ 
