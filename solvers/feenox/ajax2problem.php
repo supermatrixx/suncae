@@ -62,11 +62,10 @@ if ($field == "E" ||
           $response["warning"] = "Note that the decimal separator is dot, not comma.";
         }
         fprintf($new, "q(x,y,z) = %s\n", $value);
-        
+
       } else if (strncmp("BC ", $line, 3) == 0 || strncmp("BC\t", $line, 3) == 0) {
 
         // let's parse the existing BC
-        // var_dump($line);
         $bc_group = array();
         $bc_value = array();
         $n_values = 0;
@@ -78,9 +77,7 @@ if ($field == "E" ||
           if ($line_exploded[$i] == "GROUPS") {
             while (isset($line_exploded[$i+1])) {
               $i++;
-              // printf("parsing '%s'", $line_exploded[$i]);
               sscanf($line_exploded[$i], "%s", $bc_group[$n_groups++]);
-              // printf("got '%s' and '%s'", $bc_group[$n_groups-1]);
             }
             break;
           } else if ($line_exploded[$i] == "GROUP") {
@@ -91,8 +88,6 @@ if ($field == "E" ||
           }
           $i++;
         }
-        
-        // var_dump($bc_group);
 
         if ($bc_n == $bc_i) {
           if ($n_groups == 0) {
@@ -119,10 +114,8 @@ if ($field == "E" ||
           }
           $bc_written = true;
         }
-        
+
         $bc_name = sprintf("bc%d", $bc_i);
-        // var_dump($bc_group);
-        
         if ((isset($bc_field) && $bc_field != "remove" && $value != "") || $bc_n != $bc_i) {
           // print the new BC
           fprintf($new, "BC %s", $bc_name);
@@ -139,7 +132,6 @@ if ($field == "E" ||
       } else if (strncmp("SOLVE_PROBLEM", $line, 13) == 0) {
         if (isset($bc_field) && $bc_field != "" && $bc_written == false) {
           $bc_name = sprintf("bc%d", $bc_n);
-          // var_dump($bc_name);
           $bc_group = array();
           $bc_value = array();
           $n_groups = 0;
@@ -147,7 +139,6 @@ if ($field == "E" ||
           // add a new BC
           if ($bc_field == "face" || $bc_field == "edge") {
             $faces = explode(",", $value);
-            // var_dump($faces);
             foreach ($faces as $face) {
               $bc_group[$n_groups++] = $face;
             }
@@ -158,15 +149,10 @@ if ($field == "E" ||
             }
           }
           if ($n_values == 0) {
-            // TODO: provide a per-problem "default BC"
-            if ($problem == "mechanical") {
-              $bc_value[0] = "fixed";
-            } else if ($problem == "heat_conduction") {
-              $bc_value[0] = "adiabatic";
-            }
+            $bc_value[0] = $default_bc[$problem];
             $n_values = 1;
           }
-          
+
           // print the new BC
           fprintf($new, "BC %s", $bc_name);
           foreach ($bc_value as $val) {

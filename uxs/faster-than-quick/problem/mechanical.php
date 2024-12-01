@@ -120,20 +120,19 @@ $color[19] = [0.21, 0.78, 0.78];
 title_left("Problem definition");
 push_accordion("problem");
 push_accordion_item("bcs", "problem", "Constraints &amp; Loads", true);
-?>   
+?>
     <div class="row m-1 p-1">
      <button class="btn btn-outline-primary w-100" onclick="bc_add('custom')">
       <i class="bi bi-plus-circle me-2"></i>Add boundary condition
      </button>
     </div> 
-   
     <div class="accordion" id="accordion_bcs">   
 
 <?php
 for ($i = 0; $i < 10; $i++) {
 
   $bc_type = "custom";
-  $custom_value = ($i < count($bc)) ? $bc[$i]["value"] : "fixed";
+  $custom_value = ($i < count($bc)) ? $bc[$i]["value"] : $default_bc[$problem];
 
   $u = ($i < count($bc)) && str_contains($bc[$i]["value"], "u=0");
   $v = ($i < count($bc)) && str_contains($bc[$i]["value"], "v=0");
@@ -148,7 +147,6 @@ for ($i = 0; $i < 10; $i++) {
     $p = $matches[1];
     $bc_type = "pressure";
   }
-  
 ?>
  <div class="accordion-item <?=($i < count($bc)) ? "d-block" : "d-none" ?>" id="div_bc_<?=$i+1?>">
   <h2 class="accordion-header" id="heading_bc_<?=$i+1?>">
@@ -205,7 +203,6 @@ for ($i = 0; $i < 10; $i++) {
        </ul>
       </div> 
      </div>
-     
     </div>
 
     <div class="row mb-1">
@@ -216,16 +213,16 @@ for ($i = 0; $i < 10; $i++) {
        <option value="pressure" <?=($bc_type == "pressure")?"selected":""?>>Pressure</a>
       </select>
      </div> 
-     
+
      <!-- custom  -->
      <div class="col-8 <?=($bc_type == "custom")?"":"d-none"?>" id="bc_value_<?=$i+1?>_custom">
       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_value" value="<?=$custom_value?>" onblur="ajax2problem(this.name, this.value)">
      </div>
-     
+
      <!-- fixture -->
      <div class="col-8 <?=($bc_type == "fixture")?"":"d-none"?>" id="bc_value_<?=$i+1?>_fixture">
       <div class="row">
-      
+
        <div class="col-4 pt-2">
         <div class="form-check form-switch">
          <input class="form-check-input" type="checkbox" role="switch" id="bc_<?=$i+1?>_fixture_u" <?=($u || $i >= count($bc))?"checked":""?> onblur="bc_fixture_update(<?=$i+1?>)">
@@ -246,7 +243,7 @@ for ($i = 0; $i < 10; $i++) {
          <label class="form-check-label" for="bc_<?=$i+1?>_fixture_w"><?=$label["w"]?></label>
         </div>
        </div> 
-       
+
       </div>
      </div>
 
@@ -265,9 +262,8 @@ for ($i = 0; $i < 10; $i++) {
  </div>
 <?php
 }
-?>   
+?>
     </div>
-    
 <?php
 pop_accordion_item();
 push_accordion_item("materialproperties", "problem", "Material properties", false);
@@ -290,10 +286,10 @@ push_accordion_item("materialproperties", "problem", "Material properties", fals
        <span class="input-group-text"><?=$label["GPa"]?></span>
       </div>
      </div>
-     
+
      <label for="text_name" class="col-2 col-form-label text-end"><?=$label["nu="]?></label>
      <div class="col-4">
-     
+
       <div class="input-group">
        <input type="text" class="form-control" name="nu" id="text_nu" value="<?=$nu?>" onblur="ajax2problem(this.name, this.value)">
        <button class="btn btn-light dropdown-toggle" type="button" id="button_dropdown_bc_<?=$i+1?>" data-bs-toggle="dropdown" aria-expanded="false">
@@ -315,7 +311,7 @@ push_accordion_item("materialproperties", "problem", "Material properties", fals
       </div>
      </div>
     </div>
-    
+
     <div class="row mt-2 mb-1">
      <label for="material_model" class="col-4 col-form-label text-end">Thermal expansion</label>
      <div class="col-8">

@@ -10,6 +10,10 @@ $problem_name["heat_conduction"] = "thermal";
 $primary_field["mechanical"] = "displacements";
 $primary_field["heat_conduction"] = "T";
 
+$default_bc["mechanical"] = "fixed";
+$default_bc["heat_conduction"] = "adiabatic";
+
+
 
 function problem_hash() {
   global $username, $id;

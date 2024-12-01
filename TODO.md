@@ -40,6 +40,7 @@
 
 ## Problem
 
+ * choose faces with ranges e.g 1-74
  * other problems: modal
  * other solvers: ccx, sparselizard
  * orthotropic elasticity

@@ -143,7 +143,7 @@ push_accordion_item("bcs", "problem", "Conditions &amp; loads", true);
 for ($i = 0; $i < 10; $i++) {
 
   $bc_type = "custom";
-  $custom_value = ($i < count($bc)) ? $bc[$i]["value"] : "adiabatic";
+  $custom_value = ($i < count($bc)) ? $bc[$i]["value"] : $default_bc[$problem];
 
   $T = "0";
   if ($i < count($bc) && str_contains($bc[$i]["value"], "T=")) {
