@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
-# TODO: --force flag
+force=0
+if [ "x${1}" = "x--force" ]; then
+  force=1
+fi
 
 if [ ! -e deps.sh ]; then
   echo "run deps.sh from the root directory, i.e."
@@ -23,7 +26,6 @@ fi
 
 mkdir -p deps
 
-# TODO: --force
 # TODO: parse conf.php
 . renderers/x3dom/deps.sh
 . uxs/faster-than-quick/deps.sh
@@ -31,13 +33,3 @@ mkdir -p deps
 . solvers/feenox/deps.sh
 
 
-# $ cd ~/public_html
-# $ php -S localhost:8000
-# http://localhost:8000/
-
-# for apache, make sure all the parents have 755
-# sudo apt-get install apache2 libapache2-mod-php8.2 php-yaml
-
-
-# https://befonts.com/downfile?post_id=435326&post_slug=flama-font-family&pf_nonce=66a9899d9e
-# https://dwl.freefontsfamily.com/download/flama-font-free-download/?wpdmdl=36256&refresh=65d0ff7ea21c01708195710
