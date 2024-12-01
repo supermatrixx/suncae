@@ -158,7 +158,7 @@ for ($i = 0; $i < 10; $i++) {
     $q2 = $matches[1];
     $bc_type = "heatflux";
   }
-  
+
   $h = "0";
   if ($i < count($bc) && str_contains($bc[$i]["value"], "h=")) {
     preg_match('/h=([^\s]*)/', $bc[$i]["value"], $matches);
@@ -172,7 +172,7 @@ for ($i = 0; $i < 10; $i++) {
     $Tref = $matches[1];
     $bc_type = "convection";
   }
-  
+
 ?>
  <div class="accordion-item <?=($i < count($bc)) ? "d-block" : "d-none" ?>" id="div_bc_<?=$i+1?>">
   <h2 class="accordion-header" id="heading_bc_<?=$i+1?>">
@@ -214,7 +214,7 @@ for ($i = 0; $i < 10; $i++) {
 -->
         <li><hr class="dropdown-divider"></li>
         <li>
-         <a class="dropdown-item" href="#" onclick="bc_remove(<?=$i+1?>)">
+         <a class="dropdown-item text-danger" href="#" onclick="bc_remove(<?=$i+1?>)">
           <i class="bi bi-trash me-2"></i>Remove condition
          </a>
         </li>
@@ -262,7 +262,7 @@ for ($i = 0; $i < 10; $i++) {
        <span class="input-group-text"><?=$label["Wmm-2K"]?></span>
       </div>
      </div>
-    
+
      <!-- convection -->
      <div class="col-8 <?=($bc_type == "convection")?"":"d-none"?>" id="bc_value_<?=$i+1?>_convection">
       <div class="input-group">
@@ -270,13 +270,13 @@ for ($i = 0; $i < 10; $i++) {
        <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_h" value="<?=$h?>" onblur="ajax2problem(this.name, 'h='+this.value+' Tref='+text_bc_<?=$i+1?>_Tref.value)">
        <span class="input-group-text"><?=$label["Wmm-2K-1"]?></span>
       </div>
-      
+
       <div class="input-group">
        <span class="input-group-text"><?=$label["Tref="]?></span>
-       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_Tref" value="<?=$h?>" onblur="ajax2problem(this.name, 'h='+text_bc_<?=$i+1?>_h.value+' Tref='+this.value)">
+       <input type="text" class="form-control" name="bc_<?=$i+1?>_value" id="text_bc_<?=$i+1?>_Tref" value="<?=$Tref?>" onblur="ajax2problem(this.name, 'h='+text_bc_<?=$i+1?>_h.value+' Tref='+this.value)">
        <span class="input-group-text"><?=$label["K"]?></span>
       </div>
-      
+
      </div>
     </div>
     

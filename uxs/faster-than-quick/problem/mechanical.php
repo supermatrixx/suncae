@@ -192,7 +192,7 @@ for ($i = 0; $i < 10; $i++) {
 -->
         <li><hr class="dropdown-divider"></li>
         <li>
-         <a class="dropdown-item" href="#" onclick="bc_remove(<?=$i+1?>)">
+         <a class="dropdown-item text-danger" href="#" onclick="bc_remove(<?=$i+1?>)">
           <i class="bi bi-trash me-2"></i>Remove condition
          </a>
         </li>

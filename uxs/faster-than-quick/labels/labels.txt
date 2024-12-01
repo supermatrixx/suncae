@@ -33,6 +33,7 @@ zmin             z_\\text{min}
 zmax             z_\\text{max}
 T=               T=
 h=               h=
+Tref=            T_\\text{ref}=
 q2=              q^{\\prime\\prime}=
 K                \\text{K}
 Wmm-2K           \\text{W}\\cdot\\text{mm}^{-2}
