@@ -14,11 +14,17 @@
 ### What are the supported meshers?
 
 So far, only [Gmsh](http://gmsh.info/) is supported.
+
+See the directory [`solvers`](https://github.com/seamplex/suncae/tree/main/solvers) for the current list.
+
 If you want other meshers to be supported, say so in the [forum](https://github.com/seamplex/suncae/discussions).
 
 
 ### What are the supported solvers?
 
 So far, only [FeenoX](http://www.seamplex.com/feenox) is supported.
+
+See the directory [`solvers`](https://github.com/seamplex/suncae/tree/main/solvers) for the current list.
+
 If you want other meshers to be supported, say so in the [forum](https://github.com/seamplex/suncae/discussions).
 
