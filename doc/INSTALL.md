@@ -65,6 +65,12 @@ The meshers, solvers and required libraries and fonts can be downloaded by execu
 > suncae/dep.sh
 > ```
 
+> [!TIP]
+> The script will try to download and copy the dependencies inside SunCAE's directories (ignored by Git) only if they are not already copied. To force the download and copy (say if the version changed), you can either delete the dependencies or pass `--force` to `deps.sh`
+>
+> ```
+> ./deps.sh --force
+> ```
 
 
 ## The web server
