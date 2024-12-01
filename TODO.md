@@ -1,10 +1,10 @@
 # Roadmap
 
- * more problems
- * more meshers
- * more solvers
+ * more problems (non-linear mechanics, transient thermal, modal, cfd, etc.)
+ * more meshers (netgen? tetgen? salome?)
+ * more solvers (sparselizard? ccx? fenics?)
  * more runners (ssh, aws, kubernetes, etc.)
- * 
+ * more documentation
 
 # TODOs
 
@@ -12,10 +12,10 @@
 
  * choose points for BCs (and eventually refinements)
  * name in the BC should reflect the content
- * dashboard with cases
+ * dashboard with case list
  * real-time collaboration
  * detect changes in CAD
- * Git tracking, history
+ * git history in the ux
  * show face id when hovering
  * screenshots
  * once a minute refresh the axes, faces, edges, etc. (take a snapshot?)
@@ -23,7 +23,7 @@
  * show SunCAE version in about (mind the fact that the owner of `.git` might not be the one running, maybe we should create a `txt` when running `deps.sh`?)
  * ability to take notes in markdown
  * help ballons, markdown + pandoc
- 
+
 
 ## Gmsh
 
@@ -36,26 +36,31 @@
  * multi-solid: bonded, glued, contact
  * curved tetrahedra
  * hexahedra
- 
+
 ## Problem
 
- * other problems: thermal, modal
+ * other problems: modal
  * other solvers: ccx, sparselizard
  * orthotropic elasticity
  * thermal expansion (isotropic and orthotropic)
- * thermal feenox
  * modal feenox
  * mechanical sparselizard
- * transient/quasistatic
- 
+ * transient/quasistatic (a slider for time?)
+
 ## Results
 
- * fields
- * probes
- * reactions
- * console outout (from PRINTs)
- * download VTK
- 
+ * fields (the list of available fields should be read from the outpt vtk/msh)
+   - heat flux? (more general, vector fields?)
+ * the server should tell the client
+   - which field it is returning (so the client can choose the pallete)
+   - if it has a warped field or not
+ * the range scale has to be below the warp slider
+ * nan color (yellow)
+ * compute the .dat in the PHP, not in Bash
+ * probes: user picks location, server returns all field
+ * reactions: choose which BCs to compute reaction at in the problem step with a checkboxes
+ * warning for large deformations/stresses
+
 ## Outer loops
 
  * parametric
