@@ -7,4 +7,16 @@ include("../conf.php");
 include("../auths/{$auth}/auth.php");
 include("common.php");
 include("case.php");
-include("../uxs/{$ux}/results_vtk.php");
+
+$hash = $_GET["hash"];
+
+$vtk_path = "{$case_dir}/run/{$hash}.vtk";
+if (file_exists($vtk_path)) {
+  header("Content-Description: File Transfer");
+  header("Content-Type: application/octet-stream");
+  header("Content-Disposition: attachment; filename={$hash}.vtk");
+  header("Content-Length: " . filesize($vtk_path));
+  ob_clean();
+  flush();
+  readfile($vtk_path);
+}

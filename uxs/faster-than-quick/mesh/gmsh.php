@@ -326,11 +326,11 @@ foreach($desc as $variable => $description) {
 
 <?php
 pop_accordion_item();
-push_accordion_item("expertmesh", "mesh", "Mesher input", false);
+push_accordion_item("expertmesh", "mesh", "Mesher input &amp; output", false);
 ?>
 
     <div class="row m-1 p-1">
-     <div class="btn-group" role="group" aria-label="Basic example">
+     <div class="btn-group" role="group">
       <button class="btn btn-outline-secondary w-100" onclick="geo_show()">
        <i class="bi bi-pencil-square me-2"></i>Show &amp; edit mesher input
       </button>
@@ -339,14 +339,28 @@ push_accordion_item("expertmesh", "mesh", "Mesher input", false);
       </button>
      </div>
     </div>
-
 <?php
+if (file_exists("{$case_dir}/run/meshes/{$mesh_hash}.msh")) {
+?>
+    <div class="row m-1 p-1">
+     <div class="btn-group" role="group">
+      <a class="btn btn-success w-100" href="mesh_msh.php?id=<?=$id?>&hash=<?=$mesh_hash?>">
+       <i class="bi bi-download me-2"></i>Download MSH
+      </a>
+      <button class="btn btn-success">
+       <i class="bi bi-question-circle"></i>
+      </button>
+     </div>
+    </div>
+<?php
+}
+
 pop_accordion_item();
 push_accordion_item("meshhistory", "mesh", "Meshing history", false);
 ?>
-    
-Clean up cached meshes    
-    
+
+Clean up cached meshes
+
 <?php
 pop_accordion_item();
 pop_accordion();

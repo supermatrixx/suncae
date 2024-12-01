@@ -345,7 +345,7 @@ push_accordion_item("input", "problem", "Solver input", false);
 ?>
  
     <div class="row m-1 p-1">
-     <div class="btn-group" role="group" aria-label="Basic example">
+     <div class="btn-group" role="group">
       <button class="btn btn-outline-primary w-100" onclick="fee_show()">
        <i class="bi bi-pencil-square me-2"></i>Show &amp; edit solver input
       </button>

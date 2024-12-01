@@ -13,7 +13,6 @@ push_accordion_item("currentresults", "results", "Summary", true);
 if ($has_results) {
 
   include("results/{$problem}.php");
-  
 } else if ($has_results_attempt) {
   if ($results_meta["status"] == "canceled") {
 ?>
@@ -21,7 +20,7 @@ if ($has_results) {
      The solving process was canceled.
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div> 
-    
+
     <button class="btn btn-lg btn-outline-success w-100" onclick="relaunch_solving('<?=$problem_hash?>')">
      <i class="bi bi-arrow-repeat mx-2"></i>&nbsp;Re-launch solver
     </button>
@@ -72,8 +71,14 @@ if (file_exists("{$case_dir}/run/{$problem_hash}.vtk")) {
 <?php  
 }
 
-
 pop_accordion_item();
+push_accordion_item("fields", "results", "Fields", false);
+?>
+<h5>Not yet implemented</h5>
+<?php
+pop_accordion_item();
+
+
 push_accordion_item("probe", "results", "Probe point", false);
 ?>
 <h5>Not yet implemented</h5>
@@ -97,13 +102,7 @@ if ($console != "") {
      </div>
 <?php
   pop_accordion_item();
-}  
-
-push_accordion_item("advanced", "results", "Advanced post-processing", false);
-?>
-<h5>Not yet implemented</h5>
-<?php
-pop_accordion_item();
+}
 pop_accordion();
 ?>
 
