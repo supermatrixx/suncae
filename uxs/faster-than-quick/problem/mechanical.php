@@ -57,35 +57,39 @@ if ($fee) {
 
       if ($n_groups == 0) {
         preg_match('/(?P<name>\w+)(?P<digit>\d+)/', $bc_name, $matches);
-        $entity[0] = $matches[1];
-        $bc_group[0] = $matches[2];
-        $n_groups = 1;
+        if ($matches[1] == "face") {
+          $entity[0] = $matches[1];
+          $bc_group[0] = $matches[2];
+          $n_groups = 1;
+        }  
       }
       
       // TODO: check they are all the same
-      $bc[$bc_i]["entities"] = $entity[0];
-      $bc[$bc_i]["groups"] = "";
-      $first = true;
-      foreach ($bc_group as $group) {
-        if ($first == false) {
-          $bc[$bc_i]["groups"] .= ",";
-        } else {
-          $first = false;
+      if ($n_groups > 0) {
+        $bc[$bc_i]["entities"] = $entity[0];
+        $bc[$bc_i]["groups"] = "";
+        $first = true;
+        foreach ($bc_group as $group) {
+          if ($first == false) {
+            $bc[$bc_i]["groups"] .= ",";
+          } else {
+            $first = false;
+          }
+          $bc[$bc_i]["groups"] .= $group;
         }
-        $bc[$bc_i]["groups"] .= $group;
-      }
       
-      $bc[$bc_i]["value"] = "";
-      $first = true;
-      foreach ($bc_value as $value) {
-        if ($first == false) {
-          $bc[$bc_i]["value"] .= " ";
-        } else {
-          $first = false;
+        $bc[$bc_i]["value"] = "";
+        $first = true;
+        foreach ($bc_value as $value) {
+          if ($first == false) {
+            $bc[$bc_i]["value"] .= " ";
+          } else {
+            $first = false;
+          }
+          $bc[$bc_i]["value"] .= $value;
         }
-        $bc[$bc_i]["value"] .= $value;
+        $bc_i++;
       }
-      $bc_i++;
     }
   }
 } else {
