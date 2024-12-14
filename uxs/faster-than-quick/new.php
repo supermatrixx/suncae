@@ -7,7 +7,7 @@
 -->
 <head>
  <meta charset="utf-8">
- <title>Faster-than-quick CAE</title>
+ <title>Faster-Than-Quick CAE</title>
  
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <link href="../css/faster-than-quick/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@ include("about.php");
   <div class="container">
    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a href="https://github.com/seamplex/suncae" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" target="_blank">
-     <span class="fs-4">Faster-than-quick @ <span class="text-secondary">Sun</span><span class="text-primary">CAE</span></span>
+     <span class="fs-4">Faster-Than-Quick @ <span class="text-secondary">Sun</span><span class="text-primary">CAE</span></span>
     </a>
 
     <ul class="nav nav-pills">

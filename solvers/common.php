@@ -25,6 +25,9 @@ $problem_physics["buckling"]         = "solid";
 $problem_name["heat_conduction"]     = "Heat conduction";
 $problem_physics["heat_conduction"]  = "thermal";
 
+$problem_name["stiffness"] = "Stiffness Calculation";
+$problem_physics["stiffness"] = "solid";
+
 $solvers_names = array();
 $problems = array();
 $solvers = array();
@@ -63,3 +66,5 @@ function register_solver($solver, $name, $p, $m) {
 include("feenox/problems.php");
 include("ccx/problems.php");
 include("sparselizard/problems.php");
+include("anba/problems.php");
+

@@ -16,7 +16,7 @@ if (($cad = json_decode($cad_json, true)) == null) {
 <html lang="en" class="h-100">
 <head>
  <meta charset="utf-8">
- <title>Faster-than-quick :: <?=$case["name"]?></title>
+ <title>ciao :: <?=$case["name"]?></title>
  
 <!--  TODO: preview and meta data for sharing the url -->
   
