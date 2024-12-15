@@ -20,27 +20,34 @@
 <?php
 include("about.php");
 ?>
-
- <main>
+<main>
   <div class="container">
-   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <a href="https://github.com/seamplex/suncae" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" target="_blank">
-     <span class="fs-4">Faster-Than-Quick @ <span class="text-secondary">Sun</span><span class="text-primary">CAE</span></span>
+  <header class="d-flex flex-wrap justify-content-start py-3 mb-4 border-bottom">
+  <img src="img/leonardo_logo.png" alt="Leonardo Logo" style="height:40px; margin-right:10px;">
+  <span class="fs-4">
+    Leonardo Simulation Platform @ 
+    <a href="https://it.wikipedia.org/wiki/Leonardo_(azienda)" target="_blank" class="text-decoration-none">
+      <span class="text-secondary">Leonardo</span>
     </a>
+  </span>
+</header>
+  </div>
+</main>
 
-    <ul class="nav nav-pills">
-     <li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Help</a>
-      <ul class="dropdown-menu text-small">      
-       <li><a class="dropdown-item" href="https://github.com/seamplex/suncae">What's this?</a></li>
-       <li><a class="dropdown-item" href="#">FAQs</a></li>
-       <li><a class="dropdown-item" href="#">Tutorials</a></li>
-       <li><hr class="dropdown-divider"></li>
-       <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal_about">About</a></li>
-      </ul>
-     </li>
+<!--
+<li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Help</a>
+ <ul class="dropdown-menu text-small">      
+  <li><a class="dropdown-item" href="https://github.com/seamplex/suncae">What's this?</a></li>
+  <li><a class="dropdown-item" href="#">FAQs</a></li>
+  <li><a class="dropdown-item" href="#">Tutorials</a></li>
+  <li><hr class="dropdown-divider"></li>
+  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal_about">About</a></li>
+ </ul>
+</li>
+-->
      <!-- TODO: profile in auth -->
-     <li class="nav-item"><a href="#" class="nav-link"><?=$username?></a></li>
-    </ul>
+<!-- <li class="nav-item"><a href="#" class="nav-link"><?=$username?></a></li> -->
+</ul>
    </header>
   </div>
 
@@ -137,41 +144,26 @@ include("about.php");
  </main>
 
  <footer class="py-5">
-  <div class="container">
+ <div class="container">
 
-   <div class="row">
-    <div class="col-6 col-md-2 mb-3">
-     <h5>SunCAE</h5>
-     <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Live demo</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Quick start</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Source</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Licensing</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Roadmap</a></li>
-     </ul>
-    </div>
+<div class="row">
+ <div class="col-6 col-md-2 mb-3">
+  <h5>SunCAE</h5>
+  <!-- rimosso l'intero ul con i link -->
+ </div>
 
-    <div class="col-6 col-md-2 mb-3">
-     <h5>Support</h5>
-     <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Forum</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Tutorials</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Documentation</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Solvers &amp; meshers</a></li>
-     </ul>
-    </div>
+ <div class="col-6 col-md-2 mb-3">
+  <h5>Support</h5>
+  <!-- rimosso l'intero ul con i link -->
+ </div>
 
-    <div class="col-6 col-md-2 mb-3">
-    <h5>News</h5>
-     <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Releases</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Blog</a></li>
-     </ul>
-    <h5>Contact</h5>
-     <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">LinkedIn</a></li>
-     </ul>
+ <div class="col-6 col-md-2 mb-3">
+  <h5>News</h5>
+  <!-- rimosso l'intero ul con i link -->
+  <h5>Contact</h5>
+  <!-- rimosso l'intero ul con i link -->
+ </div>
+
      
     </div>
 <!--
