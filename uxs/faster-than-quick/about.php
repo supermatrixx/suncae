@@ -17,11 +17,13 @@
 
 <h5>Versions</h5>
 
+
 <?php
-echo `../bin/feenox -v | head -n1`;
+echo `feenox/solvers/../../bin/feenox -v | head -n1`;
 echo "<br>";
-echo "Gmsh ".`../bin/gmsh -info | head -n1`;
+echo "Gmsh ".`gmsh/meshers/../../bin/gmsh -info | head -n1`;
 ?>
+
 
 <h5>License</h5>
 

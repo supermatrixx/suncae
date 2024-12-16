@@ -21,6 +21,10 @@
 include("about.php");
 ?>
 <main>
+
+<div id="cad_error" class="alert alert-danger d-none"></div>
+ <div id="cad_help" class="alert alert-info d-none"></div>
+
   <div class="container">
   <header class="d-flex flex-wrap justify-content-start py-3 mb-4 border-bottom">
   <img src="img/leonardo_logo.png" alt="Leonardo Logo" style="height:40px; margin-right:10px;">
@@ -198,9 +202,16 @@ include("about.php");
   </div>
  </footer>
 
+
+
+
 <script type="text/javascript" src="../js/faster-than-quick/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="../js/faster-than-quick/x3dom.js"></script>
 <script>
+
+
+var cad_error = document.getElementById('cad_error');
+var cad_help = document.getElementById('cad_help');
 
 function bootstrap_hide(id) {
   document.getElementById(id).classList.remove("d-block");
@@ -224,6 +235,7 @@ function set_error(message) {
   cad_error.innerHTML += message;
   bootstrap_block("cad_error");
 }
+
 
 function upload_file() {
   reset_error();
@@ -387,31 +399,26 @@ function update_problem(what, old, update) {
   ajax.send();
 }
 
+
 function enable_btn_start() {
 
   if (physics.value != "none" && problem.value != "none" && solver.value != "dummy") {
-    bootstrap_hide("div_unsupported");
-    if (cad_error.innerHTML == "" && cad_hash.value != "") {
-      btn_start.disabled = false;
-      btn_start.classList.add("btn-success");
-      btn_start.classList.remove("btn-primary");
-    } else {
-      btn_start.disabled = true;
-      btn_start.classList.add("btn-primary");
-      btn_start.classList.remove("btn-success");
-    }
+  bootstrap_hide("div_unsupported");
+  // Abilita direttamente il tasto Start senza controllare CAD
+  btn_start.disabled = false;
+  btn_start.classList.add("btn-success");
+  btn_start.classList.remove("btn-primary");
+} else {
+  btn_start.disabled = true;
+  btn_start.classList.add("btn-primary");
+  btn_start.classList.remove("btn-success");
+  if (physics.value != "none" && problem.value != "none") {
+    bootstrap_block("div_unsupported");
   } else {
-    btn_start.disabled = true;
-    btn_start.classList.add("btn-primary");
-    btn_start.classList.remove("btn-success");
-    if (physics.value != "none" && problem.value != "none") {
-      bootstrap_block("div_unsupported");
-    } else {
-      bootstrap_hide("div_unsupported");
-    }
+    bootstrap_hide("div_unsupported");
   }
 }
-
+}
 
 </script>
 
