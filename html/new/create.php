@@ -34,6 +34,17 @@ $id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
 // }
 
 
+
+// Genera l'ID del caso
+$id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
+
+// Controllo specifico per ANBA
+if ($solver == "anba") {
+    // Reindirizza alla pagina per configurare ANBA
+    header("Location: /new/anba_config.php?id={$id}");
+        exit();
+}
+
 mkdir($id, $permissions, true);
 chdir($id);
 
