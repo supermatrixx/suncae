@@ -1,3 +1,6 @@
+Ecco il codice completo di anba_config.php, aggiornato per adattarsi ai nuovi requisiti e per accettare un unico file di input contenente sia le curve superiori che inferiori. L'interfaccia è ottimizzata e utilizza Bootstrap per un aspetto chiaro e moderno.
+Codice: anba_config.php
+
 <?php
 // Recupera l'ID del caso
 $id = $_GET['id'] ?? '';
@@ -29,7 +32,7 @@ if (empty($id)) {
 
         <!-- Spessore strato composito -->
         <div class="mb-3">
-            <label for="composite_thickness" class="form-label">Spessore Strato Composito +-45° (m)</label>
+            <label for="composite_thickness" class="form-label">Spessore Strato Composito ±45° (m)</label>
             <input type="number" step="0.001" name="composite_thickness" id="composite_thickness" class="form-control" required>
         </div>
 
@@ -39,25 +42,23 @@ if (empty($id)) {
             <input type="number" step="0.001" name="trailing_edge" id="trailing_edge" class="form-control" required>
         </div>
 
-        <!-- Caricamento file con coordinate -->
+        <!-- Caricamento file con coordinate airfoil -->
         <div class="mb-3">
-            <label for="upper_curve" class="form-label">Carica Coordinate Curva Superiore</label>
-            <input type="file" name="upper_curve" id="upper_curve" class="form-control" accept=".txt" required>
+            <label for="airfoil_file" class="form-label">Carica File Airfoil (.txt)</label>
+            <input type="file" name="airfoil_file" id="airfoil_file" class="form-control" accept=".txt" required>
+            <small class="form-text text-muted">
+                Il file deve contenere le coordinate del profilo superiore e inferiore, separate da una linea `------------------------------------------------------------------------`.
+            </small>
         </div>
 
-        <div class="mb-3">
-            <label for="lower_curve" class="form-label">Carica Coordinate Curva Inferiore</label>
-            <input type="file" name="lower_curve" id="lower_curve" class="form-control" accept=".txt" required>
-        </div>
-
-        <!-- Pulsante per aggiornare la geometria -->
-        <button type="submit" class="btn btn-primary" name="generate_geometry">Aggiorna Geometria</button>
+        <!-- Pulsante per generare geometria -->
+        <button type="submit" class="btn btn-primary" name="generate_geometry">Genera Geometria</button>
     </form>
 
     <!-- Visualizzazione dinamica della sezione 2D -->
     <div class="mt-5" id="geometry_preview">
         <h3>Anteprima Geometria 2D</h3>
-        <iframe src="preview.php?id=<?= htmlspecialchars($id) ?>" style="width: 100%; height: 500px; border: none;"></iframe>
+        <iframe id="geometry_frame" src="preview.php?id=<?= htmlspecialchars($id) ?>" style="width: 100%; height: 500px; border: none;"></iframe>
     </div>
 
     <!-- Pulsante per calcolare rigidezza -->
@@ -66,5 +67,15 @@ if (empty($id)) {
         <button type="submit" class="btn btn-success">Calcola Rigidezza</button>
     </form>
 </div>
+
+<script>
+// Script per aggiornare dinamicamente l'anteprima della geometria
+document.getElementById('airfoilForm').addEventListener('submit', function(event) {
+    const iframe = document.getElementById('geometry_frame');
+    setTimeout(function() {
+        iframe.src = iframe.src; // Ricarica l'iframe per mostrare l'anteprima aggiornata
+    }, 2000);
+});
+</script>
 </body>
 </html>
