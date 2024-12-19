@@ -10,4 +10,4 @@ $mesher = "gmsh";
 $post = "paraview";
 $runner = "local";
 $solver = "anba";
-$mesher = "gmsh";
+

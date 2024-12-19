@@ -30,6 +30,7 @@ if (($cad = json_decode($cad_json, true)) == null) {
  
 </head>
 <body>
+<?php
 echo "<header style='background-color: #007BFF; color: white; padding: 10px; text-align: center;'>
         <h1>Welcome to My Customized SunCAE</h1>
       </header>";

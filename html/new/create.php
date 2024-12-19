@@ -24,8 +24,6 @@ if (chdir("../../data/{$username}/cases") == false) {
   exit();
 }
 
-$cad = $_POST["cad_hash"];
-$id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
 
 // TODO: 2024-09-14
 // if (file_exists("../cads/{$cad}/default.geo") === false) {
@@ -49,7 +47,14 @@ mkdir($id, $permissions, true);
 chdir($id);
 
 // TODO: per mesher
-copy("../../cads/{$cad}/default.geo", "mesh.geo");
+// For Anba
+if ($solver == "anba") {
+  // Assuming Anba uses 'case.bdf'
+  copy("../../cads/{$cad}/default.bdf", "case.bdf");
+} else {
+  // Existing behavior for FeenoX
+  copy("../../cads/{$cad}/default.geo", "mesh.geo");
+}
 
 $case["id"] = $id;
 $case["owner"] = $username;
@@ -62,7 +67,11 @@ $case["name"] = isset($_POST["name"]) ? $_POST["name"] : "Unnamed";
 $case["visibility"] = "public";
 yaml_emit_file("case.yaml", $case);
 
-solver_input_write_initial("case.fee", $case["problem"]);
+if ($solver == "feenox") {
+  solver_input_write_initial("case.fee", $case["problem"]);
+} elseif ($solver == "anba") {
+  solver_input_write_initial("case.bdf", $case["problem"]); // Updated for Anba
+}
 
 $gitignore = fopen(".gitignore", "w");
 fprintf($gitignore, "run");
