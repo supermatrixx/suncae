@@ -37,8 +37,9 @@ if ($what == "physics") {
   foreach ($solvers[$what] as $index => $solver) {
     $keys[$solver] = $solvers_names[$solver];
   }
+} else if ($what == "anba") {
+  $keys["salome"] = "Salome";
 } else {
-  // TODO:
   $keys["gmsh"] = "Gmsh";
 
 /*  

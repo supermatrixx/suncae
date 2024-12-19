@@ -25,8 +25,8 @@ $problem_physics["buckling"]         = "solid";
 $problem_name["heat_conduction"]     = "Heat conduction";
 $problem_physics["heat_conduction"]  = "thermal";
 
-$problem_name["stiffness"] = "Stiffness Calculation";
-$problem_physics["stiffness"] = "solid";
+$problem_name["stiffness"]            = "Stiffness Calculation";
+$problem_physics["stiffness"]         = "solid";
 
 $solvers_names = array();
 $problems = array();

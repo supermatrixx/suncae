@@ -7,102 +7,87 @@ include("../../conf.php");
 include("../../auths/{$auth}/auth.php");
 include("../common.php");
 
+// Recupera i parametri
 $problem = $_POST["problem"];
 $mesher = $_POST["mesher"];
 $solver = $_POST["solver"];
+$cad = $_POST["cad_hash"] ?? ''; // Aggiunto per evitare problemi di variabile non definita
+
+// Include il file del solver specifico
 include("../../solvers/{$solver}/input_initial_{$problem}.php");
 
-
-if (file_exists("../../data/{$username}/cases") ==  false) {
-  if (mkdir("../../data/{$username}/cases", $permissions, true) == false) {
-    echo "error: cannot create cases directory";
+// Verifica e crea la directory dei casi, se necessario
+if (!file_exists("../../data/{$username}/cases")) {
+    if (!mkdir("../../data/{$username}/cases", $permissions, true)) {
+        echo "error: cannot create cases directory";
+        exit();
+    }
+}
+if (!chdir("../../data/{$username}/cases")) {
+    echo "error: cannot chdir to cases";
     exit();
-  }
 }
-if (chdir("../../data/{$username}/cases") == false) {
-  echo "error: cannot chdir to cases";
-  exit();
-}
-
-
-// TODO: 2024-09-14
-// if (file_exists("../cads/{$cad}/default.geo") === false) {
-//   echo "error: cad {$cad} does not have default.geo";
-//   exit();
-// }
-
-
 
 // Genera l'ID del caso
 $id = md5((`which uuidgen`) ? shell_exec("uuidgen") : uniqid());
 
-// Controllo specifico per ANBA
+// Reindirizzamento specifico per ANBA
 if ($solver == "anba") {
-    // Reindirizza alla pagina per configurare ANBA
     header("Location: /new/anba_config.php?id={$id}");
-        exit();
+    exit();
 }
 
+// Crea la directory per il caso specifico
 mkdir($id, $permissions, true);
 chdir($id);
 
-// TODO: per mesher
-// For Anba
+// Gestione file .geo o .bdf in base al solver
 if ($solver == "anba") {
-  // Assuming Anba uses 'case.bdf'
-  copy("../../cads/{$cad}/default.bdf", "case.bdf");
+    // ANBA richiede un file .bdf
+    copy("../../cads/{$cad}/default.bdf", "case.bdf");
 } else {
-  // Existing behavior for FeenoX
-  copy("../../cads/{$cad}/default.geo", "mesh.geo");
+    // FeenoX e altri solver utilizzano .geo
+    copy("../../cads/{$cad}/default.geo", "mesh.geo");
 }
 
-$case["id"] = $id;
-$case["owner"] = $username;
-$case["date"] = time();
-$case["cad"] = $cad;
-$case["problem"] = $problem;
-$case["mesher"] = $mesher;
-$case["solver"] = $solver;
-$case["name"] = isset($_POST["name"]) ? $_POST["name"] : "Unnamed";
-$case["visibility"] = "public";
+// Configura il caso
+$case = [
+    "id" => $id,
+    "owner" => $username,
+    "date" => time(),
+    "cad" => $cad,
+    "problem" => $problem,
+    "mesher" => $mesher,
+    "solver" => $solver,
+    "name" => $_POST["name"] ?? "Unnamed",
+    "visibility" => "public"
+];
 yaml_emit_file("case.yaml", $case);
 
+// Genera il file di input iniziale in base al solver
 if ($solver == "feenox") {
-  solver_input_write_initial("case.fee", $case["problem"]);
+    solver_input_write_initial("case.fee", $case["problem"]);
 } elseif ($solver == "anba") {
-  solver_input_write_initial("case.bdf", $case["problem"]); // Updated for Anba
+    solver_input_write_initial("case.bdf", $case["problem"]);
 }
 
+// Inizializzazione del repository Git
 $gitignore = fopen(".gitignore", "w");
 fprintf($gitignore, "run");
 fclose($gitignore);
 
-# TODO: create a local user
-// exec("git init --initial-branch=main", $output, $result);
 exec("git init", $output, $result);
-if ($result != 0) {
-  return_error_json("cannot git init {$case["problem"]} {$id}");
-}
-
+if ($result != 0) return_error_json("cannot git init {$case["problem"]} {$id}");
 exec("git config user.name '{$username}'", $output, $result);
-if ($result != 0) {
-  return_error_json("cannot set user.name {$case["problem"]} {$id}");
-}
-
+if ($result != 0) return_error_json("cannot set user.name {$case["problem"]} {$id}");
 exec("git config user.email '{$username}@suncae'", $output, $result);
-if ($result != 0) {
-  return_error_json("cannot set user.email {$case["problem"]} {$id}");
-}
-
+if ($result != 0) return_error_json("cannot set user.email {$case["problem"]} {$id}");
 exec("git add .", $output, $result);
-if ($result != 0) {
-  return_error_json("cannot git add {$case["problem"]} {$id}");
-}
+if ($result != 0) return_error_json("cannot git add {$case["problem"]} {$id}");
 exec("git commit -m 'initial commit'", $output, $result);
-if ($result != 0) {
-  return_error_json("cannot git commit {$case["problem"]} {$id}");
-}
+if ($result != 0) return_error_json("cannot git commit {$case["problem"]} {$id}");
 
+// Registra nei log e reindirizza
 suncae_log("created problem {$case["problem"]} {$id}");
-
 header("Location: ../?id={$id}");
+?>
